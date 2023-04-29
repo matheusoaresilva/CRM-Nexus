@@ -2,9 +2,12 @@ package com.matheus.crm.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Table(name = "address")
@@ -28,7 +31,10 @@ public class Address {
 	private String country;
 	@Column
 	private String zipcode;
-//    private Customer customer;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_id")
+    private Customer customer;
 
 	public Address() {
 	}
