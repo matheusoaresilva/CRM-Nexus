@@ -18,7 +18,9 @@ public class Product {
 	@Column
 	private String imgUrl;
 	
-//    private Category category;
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+    private Category category;
 	
 	@Column
 	private Long sku;
