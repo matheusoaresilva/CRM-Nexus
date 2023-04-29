@@ -1,11 +1,6 @@
 package com.matheus.crm.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "product")
 @Entity(name = "product")
@@ -22,22 +17,28 @@ public class Product {
 	private Double price;
 	@Column
 	private String imgUrl;
+	
 //    private Category category;
+	
 	@Column
 	private Long sku;
-//    private Supplier supplier;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
 	public Product() {
 
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl, Long sku) {
+	public Product(Long id, String name, String description, Double price, String imgUrl, Long sku, Supplier supplier) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
 		this.sku = sku;
+		this.supplier = supplier;
 	}
 
 	public Long getId() {
@@ -88,4 +89,11 @@ public class Product {
 		this.sku = sku;
 	}
 
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
 }
