@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Table(name = "supplier")
@@ -24,7 +26,11 @@ public class Supplier {
 	private String phone;
 	@Column
 	private String cnpj;
-//    private Address address;
+	
+	@ManyToOne
+	@JoinColumn(name = "address_id")
+    private Address address;
+	
 	@Column
 	private ArrayList<Product> products = new ArrayList<>();
 
@@ -32,13 +38,14 @@ public class Supplier {
 
 	}
 
-	public Supplier(Long id, String name, String email, String phone, String cnpj, ArrayList<Product> products) {
+	public Supplier(Long id, String name, String email, String phone, String cnpj, Address address, ArrayList<Product> products) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.cnpj = cnpj;
 		this.products = products;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -88,5 +95,14 @@ public class Supplier {
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
 	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
 
 }
