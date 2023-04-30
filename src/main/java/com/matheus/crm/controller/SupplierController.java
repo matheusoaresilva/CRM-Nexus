@@ -24,9 +24,6 @@ public class SupplierController {
 	@ResponseBody
 	public ResponseEntity<Optional<Supplier>> findSupplierById(@PathVariable(name = "id") Long id){
 		Optional<Supplier> supplier  = supplierService.findSupplierById(id);
-		
-		System.out.println("TESTE ok");
-
 		return ResponseEntity.ok(supplier);
 	}
 }
