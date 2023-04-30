@@ -39,4 +39,14 @@ public class ProductController {
 		}
 		return ResponseEntity.ok().body(products);
 	}
+	
+	@RequestMapping(
+			value = "/deleteproduct/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Void> deleteProducts(@PathVariable(name = "id")Long id){
+		productService.deleteProductById(id);
+		System.out.println("id: " + id + " deleted");
+		
+		return ResponseEntity.noContent().build();
+	}
 }
