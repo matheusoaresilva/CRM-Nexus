@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +27,16 @@ public class ProductController {
 		Optional<Product> product = productService.findProductBySku(sku);
 		System.out.println("TEST FIND SKU");
 		return ResponseEntity.ok(product);
+	}
+	
+	@RequestMapping(
+			value = "/getproducts", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Product>> getProducts(){
+		List<Product> products = productService.findAllProducts();
+		if (products.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(products);
 	}
 }

@@ -1,5 +1,6 @@
 package com.matheus.crm.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,9 @@ public class ProductService {
 			
 		}
 		return productOptional;
+	}
+	
+	public List<Product> findAllProducts(){
+		return productRepository.findAll();
 	}
 }
