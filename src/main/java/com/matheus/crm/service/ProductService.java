@@ -31,12 +31,14 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 	
-	public void deleteProductById(Long id) {
-		try {
-			productRepository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new NotFoundException("Product with ID " + id +" not found!");
+	public Product deleteProductBySku(Integer sku) {
+		Optional<Product> optionalProduct = productRepository.findProductBySku(sku);
+		if (!optionalProduct.isPresent()) {
+			throw new NotFoundException("Product with SKU: " + sku + " not found!");
 		}
+		Product product = optionalProduct.get();
+		productRepository.delete(product);
+		return product;
 		
 	}
 	

@@ -43,12 +43,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(
-			value = "/deleteproducts/{id}", method = RequestMethod.DELETE)
+			value = "/deleteproduct/{sku}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<?> deleteProducts(@PathVariable(name = "id")Long id){
+	public ResponseEntity<?> deleteProducts(@PathVariable(name = "sku")Integer sku){
 		try {
-			productService.deleteProductById(id);
-			System.out.println("id: " + id + " deleted");
+			Product deletedProduct =  productService.deleteProductBySku(sku);
+			if (deletedProduct == null) {
+				return ResponseEntity.notFound().build();
+			}
+			System.out.println("sku: " + sku + " deleted");
 			return ResponseEntity.noContent().build();
 			
 		} catch (NotFoundException e) {
