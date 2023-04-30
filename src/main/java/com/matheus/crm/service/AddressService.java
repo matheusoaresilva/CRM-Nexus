@@ -36,5 +36,9 @@ public class AddressService {
 			throw new NotFoundException("Address not found with ID: " + id);
 		}
 	}
+	
+	public Address addAddress(Address address) {
+		return addressRepository.save(address);
+	}
 
 }
