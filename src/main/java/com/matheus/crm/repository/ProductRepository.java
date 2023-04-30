@@ -7,5 +7,5 @@ import com.matheus.crm.entity.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long>{
-
+	Product findBySku(Integer sku);
 }
