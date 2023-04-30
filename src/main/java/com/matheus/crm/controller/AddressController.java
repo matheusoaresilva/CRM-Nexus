@@ -4,14 +4,17 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.matheus.crm.entity.Address;
+import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.service.AddressService;
 
 @Controller
@@ -43,10 +46,17 @@ public class AddressController {
 	@RequestMapping(
 			value = "/deleteaddress/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<Void> deleteAddress(@PathVariable(name = "id")Long id){
-		addressService.deleteAddressById(id);
+	public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
+		try {
+			addressService.deleteAddressById(id);
+			System.out.println("DELETED");
+			return ResponseEntity.noContent().build();
+			
+		} catch (NotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
 		
-		return ResponseEntity.noContent().build();
+		
 	}
 	
 	
