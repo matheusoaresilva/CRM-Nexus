@@ -24,9 +24,6 @@ public class CategoryController {
 	@ResponseBody
 	public ResponseEntity<Optional<Category>> findCategoryById(@PathVariable(name = "id") Long id) {
 		Optional<Category> category = categoryService.findCategoryById(id);
-		if (category == null) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok().body(category);
+		return ResponseEntity.ok(category);
 	}
 }

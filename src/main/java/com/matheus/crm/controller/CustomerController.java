@@ -22,9 +22,6 @@ public class CustomerController {
 	@ResponseBody
 	public ResponseEntity<Optional<Customer>> findCustomerById(@PathVariable(name = "id") Long id){
 		Optional<Customer> customer = customerService.findCustomerById(id);
-		if (customer == null) {
-			return ResponseEntity.notFound().build();
-		}
 		return ResponseEntity.ok(customer);
 	}
 }

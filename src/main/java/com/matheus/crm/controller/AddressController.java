@@ -24,9 +24,6 @@ public class AddressController {
 	@ResponseBody
 	public ResponseEntity<Optional<Address>> findAddressById(@PathVariable(name = "id") Long id){
 		Optional<Address> address = addressService.findAddressById(id);
-		if (address == null) {
-			return ResponseEntity.notFound().build();
-		}
 		return ResponseEntity.ok(address);
 	}
 }

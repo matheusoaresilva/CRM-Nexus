@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matheus.crm.entity.Address;
+import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.repository.AddressRepository;
 
 @Service
@@ -16,7 +17,10 @@ public class AddressService {
 	
 	
 	public Optional<Address> findAddressById(Long id){
-		Optional<Address> address = addressRepository.findById(id);
-		return address;
+		Optional<Address> addressOptional = addressRepository.findById(id);
+		if (!addressOptional.isPresent()) {
+			throw new NotFoundException("ID: " + id + " not found!");
+		}
+		return addressOptional;
 	}
 }

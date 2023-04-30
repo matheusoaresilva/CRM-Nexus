@@ -35,8 +35,8 @@ public class Customer {
 	@Column
 	private String email;
 	
-	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
-	private List<Address> address;
+//	@OneToMany(mappedBy = "customer")
+//	private List<Address> address;
 	
 	
 //    private ArrayList<Order> orders = new ArrayList<>();
@@ -56,7 +56,7 @@ public class Customer {
 		this.gender = gender;
 		this.phone = phone;
 		this.email = email;
-		this.address = address;
+//		this.address = address;
 	}
 
 	public Long getId() {
@@ -123,12 +123,12 @@ public class Customer {
 		this.email = email;
 	}
 
-	public List<Address> getAddress() {
-		return address;
-	}
-
-	public void setAddress(List<Address> address) {
-		this.address = address;
-	}
+//	public List<Address> getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(List<Address> address) {
+//		this.address = address;
+//	}
 
 }

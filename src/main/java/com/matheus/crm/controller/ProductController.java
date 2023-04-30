@@ -1,5 +1,7 @@
 package com.matheus.crm.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,9 @@ public class ProductController {
 	@RequestMapping(
 			value = "/product/sku/{sku}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Product> findProductBySku(@PathVariable(name = "sku") Integer sku) {
-		Product product = productService.findProductBySku(sku);
-		if (product == null) {
-			return ResponseEntity.notFound().build();
-		}
-		return ResponseEntity.ok().body(product);
+	public ResponseEntity<Optional<Product>> findProductBySku(@PathVariable(name = "sku") Integer sku) {
+		Optional<Product> product = productService.findProductBySku(sku);
+		System.out.println("TEST FIND SKU");
+		return ResponseEntity.ok(product);
 	}
 }
