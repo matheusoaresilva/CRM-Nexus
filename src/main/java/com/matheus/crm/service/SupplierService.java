@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.matheus.crm.entity.Supplier;
+import com.matheus.crm.exception.SupplierNotFoundException;
 import com.matheus.crm.repository.SupplierRepository;
 
 @Service
@@ -16,7 +17,11 @@ public class SupplierService {
 	
 	
 	public Optional<Supplier> findSupplierById(Long id){
-		Optional<Supplier> supplier = supplierRepository.findById(id);
-		return supplier;
+		Optional<Supplier> supplierOptional = supplierRepository.findById(id);
+		if (!supplierOptional.isPresent()) {
+			throw new SupplierNotFoundException("ID: " + id + " not found!");
+		}
+		
+		return supplierOptional;
 	}
 }

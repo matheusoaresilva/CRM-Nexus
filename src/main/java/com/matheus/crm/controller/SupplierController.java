@@ -22,15 +22,9 @@ public class SupplierController {
 	@RequestMapping(
 			value = "/supplier/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Supplier> findSupplierById(@PathVariable(name = "id") Long id){
-		Optional<Supplier> supplierOptional  = supplierService.findSupplierById(id);
+	public ResponseEntity<Optional<Supplier>> findSupplierById(@PathVariable(name = "id") Long id){
+		Optional<Supplier> supplier  = supplierService.findSupplierById(id);
 		
-		if (!supplierOptional .isPresent()) {
-			System.out.println("TESTE NOT FOUND");
-
-			return ResponseEntity.notFound().build();
-		}
-		Supplier supplier = supplierOptional .get();
 		System.out.println("TESTE ok");
 
 		return ResponseEntity.ok(supplier);
