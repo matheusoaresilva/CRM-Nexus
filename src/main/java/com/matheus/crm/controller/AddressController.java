@@ -39,4 +39,26 @@ public class AddressController {
 		return ResponseEntity.ok().body(address);
 		
 	}
+	
+	@RequestMapping(
+			value = "/deleteaddress/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Void> deleteAddress(@PathVariable(name = "id")Long id){
+		addressService.deleteAddressById(id);
+		
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

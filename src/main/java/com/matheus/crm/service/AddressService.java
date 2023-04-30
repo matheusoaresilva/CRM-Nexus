@@ -28,4 +28,20 @@ public class AddressService {
 	public List<Address> findAllAddress() {
 		return addressRepository.findAll();
 	}
+	
+	public void deleteAddressById(Long id) {
+		addressRepository.deleteById(id);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
