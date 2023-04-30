@@ -30,5 +30,8 @@ public class SupplierService {
 		return supplierRepository.findAll();
 	}
 	
+	public Supplier addSupplier(Supplier supplier) {
+		return supplierRepository.save(supplier);
+	}
 	
 }
