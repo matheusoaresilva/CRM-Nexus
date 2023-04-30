@@ -27,4 +27,7 @@ public class CustomerService {
 	public List<Customer> findAllCustomers(){
 		return customerRepository.findAll();
 	}
+	public Customer addCustomer(Customer customer) {
+		return customerRepository.save(customer);
+	}
 }
