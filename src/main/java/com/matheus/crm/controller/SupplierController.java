@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,16 @@ public class SupplierController {
 	public ResponseEntity<Optional<Supplier>> findSupplierById(@PathVariable(name = "id") Long id){
 		Optional<Supplier> supplier  = supplierService.findSupplierById(id);
 		return ResponseEntity.ok(supplier);
+	}
+	
+	@RequestMapping(
+			value = "/getsuppliers",  method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Supplier>> getSuppliers(){
+		List<Supplier> suppliers = supplierService.findAllSuppliers();
+		if (suppliers.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(suppliers);
 	}
 }
