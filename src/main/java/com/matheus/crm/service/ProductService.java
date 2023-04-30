@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.matheus.crm.entity.Product;
@@ -31,6 +32,11 @@ public class ProductService {
 	}
 	
 	public void deleteProductById(Long id) {
-		productRepository.deleteById(id);
+		try {
+			productRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new NotFoundException("Product with ID " + id +" not found!");
+		}
+		
 	}
 }

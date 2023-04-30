@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.matheus.crm.entity.Product;
+import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.service.ProductService;
 
 @Controller
@@ -41,12 +42,19 @@ public class ProductController {
 	}
 	
 	@RequestMapping(
-			value = "/deleteproduct/{id}", method = RequestMethod.DELETE)
+			value = "/deleteproducts/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<Void> deleteProducts(@PathVariable(name = "id")Long id){
-		productService.deleteProductById(id);
-		System.out.println("id: " + id + " deleted");
+	public ResponseEntity<?> deleteProducts(@PathVariable(name = "id")Long id){
+		try {
+			productService.deleteProductById(id);
+			System.out.println("id: " + id + " deleted");
+			return ResponseEntity.noContent().build();
+			
+		} catch (NotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
 		
-		return ResponseEntity.noContent().build();
+		
+		
 	}
 }
