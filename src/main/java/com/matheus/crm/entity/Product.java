@@ -23,9 +23,9 @@ public class Product {
     private Category category;
 	
 	@Column
-	private Long sku;
+	private Integer sku;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
@@ -33,7 +33,7 @@ public class Product {
 
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl, Long sku, Supplier supplier) {
+	public Product(Long id, String name, String description, Double price, String imgUrl, Integer sku, Supplier supplier) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -83,11 +83,11 @@ public class Product {
 		this.imgUrl = imgUrl;
 	}
 
-	public Long getSku() {
+	public Integer getSku() {
 		return sku;
 	}
 
-	public void setSku(Long sku) {
+	public void setSku(Integer sku) {
 		this.sku = sku;
 	}
 
