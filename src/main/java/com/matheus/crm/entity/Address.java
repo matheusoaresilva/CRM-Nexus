@@ -32,9 +32,13 @@ public class Address {
 	@Column
 	private String zipcode;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_id")
-    private Customer customer;
+//	@ManyToOne
+//	@JoinColumn(name = "customer_id")
+//    private Customer customer;
+//	
+//	@ManyToOne
+//	@JoinColumn(name = "supplier_id")
+//    private Supplier supplier;
 
 	public Address() {
 	}
@@ -116,4 +120,21 @@ public class Address {
 		this.zipcode = zipcode;
 	}
 
+//	public Customer getCustomer() {
+//		return customer;
+//	}
+//
+//	public void setCustomer(Customer customer) {
+//		this.customer = customer;
+//	}
+//
+//	public Supplier getSupplier() {
+//		return supplier;
+//	}
+//
+//	public void setSupplier(Supplier supplier) {
+//		this.supplier = supplier;
+//	}
+
+	
 }

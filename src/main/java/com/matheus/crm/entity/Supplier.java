@@ -1,9 +1,7 @@
 package com.matheus.crm.entity;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Table(name = "supplier")
@@ -30,12 +27,12 @@ public class Supplier {
 	@Column
 	private String cnpj;
 	
-	@ManyToOne
-	@JoinColumn(name = "address_id")
-    private Address address;
+//	@ManyToOne
+//	@JoinColumn(name = "address_id")
+//    private Address address;
 	
-	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-	private List<Product> products;
+//	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
+//	private List<Product> products;
 
 	public Supplier() {
 
@@ -47,8 +44,8 @@ public class Supplier {
 		this.email = email;
 		this.phone = phone;
 		this.cnpj = cnpj;
-		this.products = products;
-		this.address = address;
+//		this.products = products;
+//		this.address = address;
 	}
 
 	public Long getId() {
@@ -92,21 +89,21 @@ public class Supplier {
 	}
 
 	
-	public List<Product> getProducts() {
-		return products;
-	}
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
-	}
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
-	}
+//	public Address getAddress() {
+//		return address;
+//	}
+//
+//	public void setAddress(Address address) {
+//		this.address = address;
+//	}
 	
 
 }

@@ -29,4 +29,6 @@ public class SupplierService {
 	public List<Supplier> findAllSuppliers(){
 		return supplierRepository.findAll();
 	}
+	
+	
 }
