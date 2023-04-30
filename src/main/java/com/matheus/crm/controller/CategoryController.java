@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,16 @@ public class CategoryController {
 	public ResponseEntity<Optional<Category>> findCategoryById(@PathVariable(name = "id") Long id) {
 		Optional<Category> category = categoryService.findCategoryById(id);
 		return ResponseEntity.ok(category);
+	}
+	
+	@RequestMapping(
+			value = "/getcategories", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Category>> getCategories(){
+		List<Category> category = categoryService.findAllCategories();
+		if (category.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(category);
 	}
 }

@@ -1,5 +1,6 @@
 package com.matheus.crm.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,9 @@ public class CategoryService {
 			throw new NotFoundException("ID: " + id + " not found!");
 		}
 		return categoryOptional;
+	}
+	
+	public List<Category> findAllCategories(){
+		return categoryRepository.findAll();
 	}
 }
