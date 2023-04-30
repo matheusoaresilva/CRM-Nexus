@@ -1,5 +1,6 @@
 package com.matheus.crm.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,9 @@ public class AddressService {
 			throw new NotFoundException("ID: " + id + " not found!");
 		}
 		return addressOptional;
+	}
+	
+	public List<Address> findAllAddress() {
+		return addressRepository.findAll();
 	}
 }

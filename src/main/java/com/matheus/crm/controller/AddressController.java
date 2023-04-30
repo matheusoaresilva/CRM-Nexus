@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,17 @@ public class AddressController {
 	public ResponseEntity<Optional<Address>> findAddressById(@PathVariable(name = "id") Long id){
 		Optional<Address> address = addressService.findAddressById(id);
 		return ResponseEntity.ok(address);
+	}
+	
+	@RequestMapping(
+			value = "/getAddresses", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Address>> getAddresses(){
+		List<Address> address =  addressService.findAllAddress();
+		if (address.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok().body(address);
+		
 	}
 }
