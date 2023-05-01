@@ -23,12 +23,7 @@ public class ProductService {
 	@Transactional(readOnly = true)
 	public ProductDTO findProductBySku(Integer sku){
 		Optional<Product> productOptional = productRepository.findProductBySku(sku);
-		if (!productOptional.isPresent()) {
-			System.out.println("TEST ERROR SKU");
-			throw new NotFoundException("SKU: " + sku + " not found!");
-			
-		}
-		Product entity = productOptional.get();
+		Product entity = productOptional.orElseThrow(() -> new NotFoundException("SKU: " + sku + " not found!"));
 		return new ProductDTO(entity);
 		
 	}
