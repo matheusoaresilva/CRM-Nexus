@@ -50,7 +50,16 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public Product addProduct(Product product) {
-		return productRepository.save(product);
+	public ProductDTO addProduct(ProductDTO product) {
+		Product entity = new Product();
+		entity.setName(product.getName());
+		entity.setDescription(product.getDescription());
+		entity.setPrice(product.getPrice());
+		entity.setImgUrl(product.getImgUrl());
+		entity.setSku(product.getSku());
+		entity.setSupplier(product.getSupplier());
+
+		entity = productRepository.save(entity);
+		return new ProductDTO(entity);
 	}
 }

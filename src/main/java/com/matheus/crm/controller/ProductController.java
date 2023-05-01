@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.net.URI;
 import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
@@ -64,8 +66,10 @@ public class ProductController {
 	@RequestMapping(
 			value = "/createproduct", consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
-	public Product createProduct(@RequestBody Product product) {
-		Product newProduct = productService.addProduct(product);
-		return newProduct;
+	public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDto) {
+		productDto = productService.addProduct(productDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(productDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(productDto);
 	}
 }
