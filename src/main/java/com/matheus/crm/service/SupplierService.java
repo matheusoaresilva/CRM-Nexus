@@ -37,8 +37,15 @@ public class SupplierService {
 	}
 	
 	@Transactional
-	public Supplier addSupplier(Supplier supplier) {
-		return supplierRepository.save(supplier);
+	public SupplierDTO addSupplier(SupplierDTO supplier) {
+		Supplier entity = new Supplier();
+		entity.setName(supplier.getName());
+		entity.setEmail(supplier.getEmail());
+		entity.setPhone(supplier.getPhone());
+		entity.setCnpj(supplier.getCnpj());
+
+		entity =  supplierRepository.save(entity);
+		return new SupplierDTO(entity);
 	}
 	
 }
