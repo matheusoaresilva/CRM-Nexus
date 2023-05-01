@@ -68,7 +68,14 @@ public class AddressController {
 		return ResponseEntity.created(uri).body(addressDto);
 	}
 	
-	
+	@RequestMapping(
+			value = "/updateaddress/{id}", consumes = "application/json" , method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<AddressDTO> updateAddress(@PathVariable(name = "id") Long id ,@RequestBody AddressDTO addressDto) {
+		addressDto = addressService.updateAddress(id, addressDto);
+		
+		return ResponseEntity.ok().body(addressDto);
+	}
 	
 	
 	
