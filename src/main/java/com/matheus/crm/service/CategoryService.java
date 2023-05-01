@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.CategoryDTO;
 import com.matheus.crm.entity.Category;
@@ -18,6 +19,7 @@ public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
+	@Transactional(readOnly = true)
 	public CategoryDTO findCategoryById(Long id){
 		Optional<Category> categoryOptional = categoryRepository.findById(id);
 		if (!categoryOptional.isPresent()) {
@@ -28,6 +30,7 @@ public class CategoryService {
 		return new CategoryDTO(entity);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CategoryDTO> findAllCategories(){
 		List<Category> list = categoryRepository.findAll();
 		
@@ -36,6 +39,7 @@ public class CategoryService {
 		return listDto;
 	}
 	
+	@Transactional
 	public Category addCategory(Category category) {
 		return categoryRepository.save(category);
 	}

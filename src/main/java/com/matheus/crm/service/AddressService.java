@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.AddressDTO;
 import com.matheus.crm.entity.Address;
@@ -19,6 +20,7 @@ public class AddressService {
 	@Autowired
 	private AddressRepository addressRepository;
 
+	@Transactional(readOnly = true)
 	public AddressDTO findAddressById(Long id) {
 		Optional<Address> addressOptional = addressRepository.findById(id);
 		if (!addressOptional.isPresent()) {
@@ -28,6 +30,7 @@ public class AddressService {
 		return new AddressDTO(entity);
 	}
 
+	@Transactional(readOnly = true)
 	public List<AddressDTO> findAllAddress() {
 		List<Address> list = addressRepository.findAll();
 		
@@ -36,6 +39,7 @@ public class AddressService {
 		return listDto;
 	}
 
+	@Transactional
 	public void deleteAddressById(Long id) {
 		try {
 			addressRepository.deleteById(id);
@@ -44,10 +48,12 @@ public class AddressService {
 		}
 	}
 	
+	@Transactional
 	public Address addAddress(Address address) {
 		return addressRepository.save(address);
 	}
 	
+//	@Transactional
 //	public Address updateAddress(Address address, Long id) {
 //		
 //	}

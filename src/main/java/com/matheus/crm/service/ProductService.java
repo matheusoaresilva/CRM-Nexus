@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
@@ -18,6 +19,7 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Transactional(readOnly = true)
 	public ProductDTO findProductBySku(Integer sku){
 		Optional<Product> productOptional = productRepository.findProductBySku(sku);
 		if (!productOptional.isPresent()) {
@@ -30,6 +32,7 @@ public class ProductService {
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<ProductDTO> findAllProducts(){
 		List<Product> list = productRepository.findAll();
 		
@@ -38,6 +41,7 @@ public class ProductService {
 		return listDto;
 	}
 	
+	@Transactional
 	public Product deleteProductBySku(Integer sku) {
 		Optional<Product> optionalProduct = productRepository.findProductBySku(sku);
 		if (!optionalProduct.isPresent()) {
@@ -49,6 +53,7 @@ public class ProductService {
 		
 	}
 	
+	@Transactional
 	public Product addProduct(Product product) {
 		return productRepository.save(product);
 	}

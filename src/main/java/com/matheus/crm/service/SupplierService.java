@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.SupplierDTO;
 import com.matheus.crm.entity.Supplier;
@@ -18,7 +19,7 @@ public class SupplierService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 	
-	
+	@Transactional(readOnly = true)
 	public SupplierDTO findSupplierById(Long id){
 		Optional<Supplier> supplierOptional = supplierRepository.findById(id);
 		if (!supplierOptional.isPresent()) {
@@ -29,6 +30,7 @@ public class SupplierService {
 		return new SupplierDTO(entity);
 	}
 	
+	@Transactional(readOnly = true)
 	public List<SupplierDTO> findAllSuppliers(){
 		List<Supplier> list = supplierRepository.findAll();
 		
@@ -37,6 +39,7 @@ public class SupplierService {
 		return listdDto;
 	}
 	
+	@Transactional
 	public Supplier addSupplier(Supplier supplier) {
 		return supplierRepository.save(supplier);
 	}

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.CustomerDTO;
 import com.matheus.crm.entity.Customer;
@@ -18,6 +19,7 @@ public class CustomerService {
 	@Autowired
 	private CustomerRepository customerRepository;
 	
+	@Transactional(readOnly = true)
 	public CustomerDTO findCustomerById(Long id) {
 		Optional<Customer> customerOptional = customerRepository.findById(id);
 		if (!customerOptional.isPresent()) {
@@ -28,6 +30,7 @@ public class CustomerService {
 		
 	}
 	
+	@Transactional(readOnly = true)
 	public List<CustomerDTO> findAllCustomers(){
 		List<Customer> list = customerRepository.findAll();
 		
@@ -35,6 +38,8 @@ public class CustomerService {
 				.map(x -> new CustomerDTO(x)).collect(Collectors.toList());
 		return listDto;
 	}
+	
+	@Transactional
 	public Customer addCustomer(Customer customer) {
 		return customerRepository.save(customer);
 	}
