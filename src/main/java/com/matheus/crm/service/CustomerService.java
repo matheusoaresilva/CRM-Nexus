@@ -23,10 +23,7 @@ public class CustomerService {
 	@Transactional(readOnly = true)
 	public CustomerDTO findCustomerById(Long id) {
 		Optional<Customer> customerOptional = customerRepository.findById(id);
-		if (!customerOptional.isPresent()) {
-			throw new NotFoundException("ID: " + id + " not found!");
-		}
-		Customer entity = customerOptional.get();
+		Customer entity = customerOptional.orElseThrow(() -> new NotFoundException("ID: " + id + " not found!"));
 		return new CustomerDTO(entity);
 		
 	}
