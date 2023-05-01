@@ -15,7 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.AddressDTO;
 import com.matheus.crm.service.AddressService;
-import com.matheus.crm.service.exception.NotFoundException;
 
 @Controller
 public class AddressController {
@@ -46,15 +45,9 @@ public class AddressController {
 	@RequestMapping(
 			value = "/deleteaddress/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id) {
-		try {
-			addressService.deleteAddressById(id);
-			System.out.println("DELETED");
-			return ResponseEntity.noContent().build();
-			
-		} catch (NotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id) {
+		addressService.deleteAddressById(id);
+		return ResponseEntity.noContent().build();
 		
 	}
 	

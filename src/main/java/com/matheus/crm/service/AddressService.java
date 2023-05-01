@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.matheus.crm.dto.AddressDTO;
 import com.matheus.crm.entity.Address;
 import com.matheus.crm.repository.AddressRepository;
+import com.matheus.crm.service.exception.DatabaseException;
 import com.matheus.crm.service.exception.NotFoundException;
 
 @Service
@@ -36,12 +38,14 @@ public class AddressService {
 		return listDto;
 	}
 
-	@Transactional
 	public void deleteAddressById(Long id) {
 		try {
 			addressRepository.deleteById(id);
 		} catch (EmptyResultDataAccessException e) {
-			throw new NotFoundException("Address not found with ID: " + id);
+			throw new NotFoundException("Id not found!");
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
 		}
 	}
 	
