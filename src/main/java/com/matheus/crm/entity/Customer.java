@@ -1,16 +1,15 @@
 package com.matheus.crm.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Table(name = "customer")
@@ -35,6 +34,10 @@ public class Customer {
 	@Column
 	private String email;
 	
+	@OneToOne
+	@JoinColumn(name = "address_id")
+	private Address address;
+	
 //	@OneToMany(mappedBy = "customer")
 //	private List<Address> address;
 	
@@ -46,7 +49,7 @@ public class Customer {
 	}
 
 	public Customer(Long id, String firstName, String lastName, Date dateBirth, String cpf, String gender, String phone,
-			String email, ArrayList<Address> address) {
+			String email, Address address) {
 
 		this.id = id;
 		this.firstName = firstName;
@@ -56,7 +59,7 @@ public class Customer {
 		this.gender = gender;
 		this.phone = phone;
 		this.email = email;
-//		this.address = address;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -123,12 +126,12 @@ public class Customer {
 		this.email = email;
 	}
 
-//	public List<Address> getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(List<Address> address) {
-//		this.address = address;
-//	}
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 }
