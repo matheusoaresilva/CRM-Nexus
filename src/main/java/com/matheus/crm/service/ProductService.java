@@ -2,12 +2,9 @@ package com.matheus.crm.service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.matheus.crm.dto.ProductDTO;
@@ -21,14 +18,16 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
-	public Optional<Product> findProductBySku(Integer sku){
+	public ProductDTO findProductBySku(Integer sku){
 		Optional<Product> productOptional = productRepository.findProductBySku(sku);
 		if (!productOptional.isPresent()) {
 			System.out.println("TEST ERROR SKU");
 			throw new NotFoundException("SKU: " + sku + " not found!");
 			
 		}
-		return productOptional;
+		Product entity = productOptional.get();
+		return new ProductDTO(entity);
+		
 	}
 	
 	public List<ProductDTO> findAllProducts(){

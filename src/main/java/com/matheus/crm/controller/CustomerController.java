@@ -1,7 +1,6 @@
 package com.matheus.crm.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.matheus.crm.dto.CustomerDTO;
 import com.matheus.crm.entity.Customer;
 import com.matheus.crm.service.CustomerService;
 
@@ -24,16 +24,16 @@ public class CustomerController {
 	@RequestMapping(
 			value = "/customer/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Optional<Customer>> findCustomerById(@PathVariable(name = "id") Long id){
-		Optional<Customer> customer = customerService.findCustomerById(id);
+	public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable(name = "id") Long id){
+		CustomerDTO customer = customerService.findCustomerById(id);
 		return ResponseEntity.ok(customer);
 	}
 	
 	@RequestMapping(
 			value = "/getcustomers", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Customer>> getCustomers(){
-		List<Customer> customers = customerService.findAllCustomers();
+	public ResponseEntity<List<CustomerDTO>> getCustomers(){
+		List<CustomerDTO> customers = customerService.findAllCustomers();
 		if (customers.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
