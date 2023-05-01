@@ -3,6 +3,7 @@ package com.matheus.crm.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.matheus.crm.entity.Address;
 import com.matheus.crm.entity.Customer;
 
 public class CustomerDTO implements Serializable{
@@ -17,7 +18,7 @@ public class CustomerDTO implements Serializable{
     public String gender;
     public String phone;
     public String email;
-    
+    public Address address;
     
 	public CustomerDTO() {
 	}
@@ -31,11 +32,12 @@ public class CustomerDTO implements Serializable{
 		this.gender = entity.getGender();
 		this.phone = entity.getPhone();
 		this.email = entity.getEmail();
+		this.address = entity.getAddress();
 	}
 
 
 	public CustomerDTO(Long id, String firstName, String lastName, Date dateBirth, String cpf, String gender,
-			String phone, String email) {
+			String phone, String email, Address address) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -44,6 +46,7 @@ public class CustomerDTO implements Serializable{
 		this.gender = gender;
 		this.phone = phone;
 		this.email = email;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -108,6 +111,14 @@ public class CustomerDTO implements Serializable{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
     
     
