@@ -72,4 +72,13 @@ public class ProductController {
 				.buildAndExpand(productDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(productDto);
 	}
+	
+	@RequestMapping(
+			value = "/updateproduct/{id}", consumes = "application/json" , method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<ProductDTO> updateProduct(@PathVariable(name = "id") Long id ,@RequestBody ProductDTO productDto) {
+		productDto = productService.updateProduct(id, productDto);
+		
+		return ResponseEntity.ok().body(productDto);
+	}
 }

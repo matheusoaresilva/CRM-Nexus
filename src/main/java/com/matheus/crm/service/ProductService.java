@@ -62,4 +62,22 @@ public class ProductService {
 		entity = productRepository.save(entity);
 		return new ProductDTO(entity);
 	}
+	
+	@Transactional
+	public ProductDTO updateProduct(Long id, ProductDTO product) {
+		Product entity = productRepository.findById(id)
+	            .orElseThrow(() -> new NotFoundException("product not found for id: " + id));
+	    
+		entity.setName(product.getName());
+		entity.setDescription(product.getDescription());
+		entity.setPrice(product.getPrice());
+		entity.setImgUrl(product.getImgUrl());
+		entity.setSku(product.getSku());
+		entity.setSupplier(product.getSupplier());
+
+	   
+	    Product updatedproduct = productRepository.save(entity);
+
+	    return new ProductDTO(updatedproduct);
+	}
 }
