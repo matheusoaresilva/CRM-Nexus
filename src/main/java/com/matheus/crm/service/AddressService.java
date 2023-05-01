@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.AddressDTO;
 import com.matheus.crm.entity.Address;
-import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.repository.AddressRepository;
+import com.matheus.crm.service.exception.NotFoundException;
 
 @Service
 public class AddressService {
@@ -23,10 +23,7 @@ public class AddressService {
 	@Transactional(readOnly = true)
 	public AddressDTO findAddressById(Long id) {
 		Optional<Address> addressOptional = addressRepository.findById(id);
-		if (!addressOptional.isPresent()) {
-			throw new NotFoundException("ID: " + id + " not found!");
-		}
-		Address entity = addressOptional.get();
+		Address entity = addressOptional.orElseThrow(() -> new NotFoundException("ID: " + id + " not found!"));
 		return new AddressDTO(entity);
 	}
 
