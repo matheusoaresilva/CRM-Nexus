@@ -46,13 +46,39 @@ public class AddressService {
 	}
 	
 	@Transactional
-	public Address addAddress(Address address) {
-		return addressRepository.save(address);
+	public AddressDTO addAddress(AddressDTO address) {
+		Address entity = new Address();
+		entity.setStreet(address.getStreet());
+		entity.setNumber(address.getNumber());
+		entity.setNeighborhood(address.getNeighborhood());
+		entity.setCity(address.getCity());
+		entity.setState(address.getState());
+		entity.setCountry(address.getCountry());
+		entity.setZipcode(address.getZipcode());
+		entity = addressRepository.save(entity);
+		
+		return new AddressDTO(entity);
+		
 	}
+
 	
-//	@Transactional
-//	public Address updateAddress(Address address, Long id) {
-//		
-//	}
+	@Transactional
+	public AddressDTO updateAddress(Long id, AddressDTO address) {
+		Address entity = addressRepository.findById(id)
+	            .orElseThrow(() -> new NotFoundException("Address not found for id: " + id));
+	    
+	    entity.setStreet(address.getStreet());
+	    entity.setNumber(address.getNumber());
+	    entity.setNeighborhood(address.getNeighborhood());
+	    entity.setCity(address.getCity());
+	    entity.setState(address.getState());
+	    entity.setCountry(address.getCountry());
+	    entity.setZipcode(address.getZipcode());
+
+	   
+	    Address updatedAddress = addressRepository.save(entity);
+
+	    return new AddressDTO(updatedAddress);
+	}
 
 }

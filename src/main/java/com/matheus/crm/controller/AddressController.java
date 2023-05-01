@@ -1,6 +1,7 @@
 package com.matheus.crm.controller;
 
-import java.util.List; 
+import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.AddressDTO;
-import com.matheus.crm.entity.Address;
-import com.matheus.crm.service.exception.NotFoundException;
 import com.matheus.crm.service.AddressService;
+import com.matheus.crm.service.exception.NotFoundException;
 
 @Controller
 public class AddressController {
@@ -60,9 +61,11 @@ public class AddressController {
 	@RequestMapping(
 			value = "/createaddress",consumes = "application/json" , method = RequestMethod.POST)
 	@ResponseBody
-	public Address createAddress(@RequestBody Address address) {
-		Address newAddress = addressService.addAddress(address);
-		return newAddress;
+	public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDto) {
+		addressDto = addressService.addAddress(addressDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(addressDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(addressDto);
 	}
 	
 	
