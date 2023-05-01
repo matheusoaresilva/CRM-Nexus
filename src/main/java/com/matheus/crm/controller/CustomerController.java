@@ -42,6 +42,15 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(
+			value = "/deletecustomer/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id) {
+		customerService.deleteCustomerById(id);
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	@RequestMapping(
 			value = "/createcustomer", consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDto) {
@@ -49,5 +58,14 @@ public class CustomerController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(customerDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(customerDto);
+	}
+	
+	@RequestMapping(
+			value = "/updatecustomer/{id}", consumes = "application/json" , method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable(name = "id") Long id ,@RequestBody CustomerDTO customerDto) {
+		customerDto = customerService.updateCustomer(id, customerDto);
+		
+		return ResponseEntity.ok().body(customerDto);
 	}
 }
