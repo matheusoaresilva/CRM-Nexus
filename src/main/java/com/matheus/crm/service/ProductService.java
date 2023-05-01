@@ -1,6 +1,6 @@
 package com.matheus.crm.service;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
-import com.matheus.crm.exception.NotFoundException;
+import com.matheus.crm.service.exception.NotFoundException;
+
 import com.matheus.crm.repository.ProductRepository;
 
 @Service

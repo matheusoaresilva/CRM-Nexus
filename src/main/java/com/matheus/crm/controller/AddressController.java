@@ -1,6 +1,6 @@
 package com.matheus.crm.controller;
 
-import java.util.List;
+import java.util.List; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.matheus.crm.dto.AddressDTO;
 import com.matheus.crm.entity.Address;
-import com.matheus.crm.exception.NotFoundException;
+import com.matheus.crm.service.exception.NotFoundException;
 import com.matheus.crm.service.AddressService;
 
 @Controller
