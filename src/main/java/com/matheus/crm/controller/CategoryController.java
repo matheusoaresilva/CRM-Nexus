@@ -42,6 +42,15 @@ public class CategoryController {
 	}
 	
 	@RequestMapping(
+			value = "/deletecategory/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id) {
+		categoryService.deleteCategoryById(id);
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	@RequestMapping(
 			value = "/createcategory",consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDto) {
@@ -49,6 +58,15 @@ public class CategoryController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(categoryDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(categoryDto);
+	}
+	
+	@RequestMapping(
+			value = "/updatecategory/{id}", consumes = "application/json" , method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<CategoryDTO> updatecategory(@PathVariable(name = "id") Long id ,@RequestBody CategoryDTO categoryDto) {
+		categoryDto = categoryService.updateCategory(id, categoryDto);
+		
+		return ResponseEntity.ok().body(categoryDto);
 	}
 	
 }
