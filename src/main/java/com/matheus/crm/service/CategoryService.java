@@ -41,8 +41,13 @@ public class CategoryService {
 	}
 	
 	@Transactional
-	public Category addCategory(Category category) {
-		return categoryRepository.save(category);
+	public CategoryDTO addCategory(CategoryDTO category) {
+		Category entity = new Category();
+		entity.setName(category.getName());
+		entity.setDescription(category.getDescription());
+
+		entity = categoryRepository.save(entity);
+		return new CategoryDTO(entity);
 	}
 	
 }

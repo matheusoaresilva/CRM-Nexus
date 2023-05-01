@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.CategoryDTO;
-import com.matheus.crm.entity.Category;
 import com.matheus.crm.service.CategoryService;
 
 @Controller
@@ -43,9 +44,11 @@ public class CategoryController {
 	@RequestMapping(
 			value = "/createcategory",consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
-	public Category createCategory(@RequestBody Category category) {
-		Category newCategory = categoryService.addCategory(category);
-		return newCategory;
+	public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDto) {
+		categoryDto = categoryService.addCategory(categoryDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(categoryDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(categoryDto);
 	}
 	
 }
