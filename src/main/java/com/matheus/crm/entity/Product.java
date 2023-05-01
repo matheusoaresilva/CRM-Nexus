@@ -33,15 +33,21 @@ public class Product {
 
 	}
 
-	public Product(Long id, String name, String description, Double price, String imgUrl, Integer sku, Supplier supplier) {
+	
+
+	public Product(Long id, String name, String description, Double price, String imgUrl, Category category,
+			Integer sku, Supplier supplier) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
+		this.category = category;
 		this.sku = sku;
 		this.supplier = supplier;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -98,4 +104,14 @@ public class Product {
 	public void setSupplier(Supplier supplier) {
 		this.supplier = supplier;
 	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+	
+	
 }
