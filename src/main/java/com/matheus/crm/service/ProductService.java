@@ -2,11 +2,15 @@ package com.matheus.crm.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
+import org.aspectj.weaver.NewConstructorTypeMunger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
 import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.repository.ProductRepository;
@@ -27,8 +31,12 @@ public class ProductService {
 		return productOptional;
 	}
 	
-	public List<Product> findAllProducts(){
-		return productRepository.findAll();
+	public List<ProductDTO> findAllProducts(){
+		List<Product> list = productRepository.findAll();
+		
+		List<ProductDTO> listDto = list.stream()
+				.map(x -> new ProductDTO(x)).collect(Collectors.toList());
+		return listDto;
 	}
 	
 	public Product deleteProductBySku(Integer sku) {

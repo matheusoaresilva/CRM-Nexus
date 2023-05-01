@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
 import com.matheus.crm.exception.NotFoundException;
 import com.matheus.crm.service.ProductService;
@@ -34,8 +35,8 @@ public class ProductController {
 	@RequestMapping(
 			value = "/getproducts", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<Product>> getProducts(){
-		List<Product> products = productService.findAllProducts();
+	public ResponseEntity<List<ProductDTO>> getProducts(){
+		List<ProductDTO> products = productService.findAllProducts();
 		if (products.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
