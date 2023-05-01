@@ -1,6 +1,6 @@
 package com.matheus.crm.service;
 
-import java.util.List; 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -10,32 +10,30 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.SupplierDTO;
 import com.matheus.crm.entity.Supplier;
-import com.matheus.crm.service.exception.NotFoundException;
-
 import com.matheus.crm.repository.SupplierRepository;
+import com.matheus.crm.service.exception.NotFoundException;
 
 @Service
 public class SupplierService {
 
 	@Autowired
 	private SupplierRepository supplierRepository;
-	
+
 	@Transactional(readOnly = true)
-	public SupplierDTO findSupplierById(Long id){
+	public SupplierDTO findSupplierById(Long id) {
 		Optional<Supplier> supplierOptional = supplierRepository.findById(id);
 		Supplier entity = supplierOptional.orElseThrow(() -> new NotFoundException("ID: " + id + " not found!"));
 		return new SupplierDTO(entity);
 	}
-	
+
 	@Transactional(readOnly = true)
-	public List<SupplierDTO> findAllSuppliers(){
+	public List<SupplierDTO> findAllSuppliers() {
 		List<Supplier> list = supplierRepository.findAll();
-		
-		List<SupplierDTO> listdDto = list.stream()
-				.map(x -> new SupplierDTO(x)).collect(Collectors.toList());
+
+		List<SupplierDTO> listdDto = list.stream().map(x -> new SupplierDTO(x)).collect(Collectors.toList());
 		return listdDto;
 	}
-	
+
 	@Transactional
 	public SupplierDTO addSupplier(SupplierDTO supplier) {
 		Supplier entity = new Supplier();
@@ -44,8 +42,23 @@ public class SupplierService {
 		entity.setPhone(supplier.getPhone());
 		entity.setCnpj(supplier.getCnpj());
 
-		entity =  supplierRepository.save(entity);
+		entity = supplierRepository.save(entity);
 		return new SupplierDTO(entity);
 	}
-	
+
+	@Transactional
+	public SupplierDTO updateSupplier(Long id, SupplierDTO supplier) {
+		Supplier entity = supplierRepository.findById(id)
+				.orElseThrow(() -> new NotFoundException("supplier not found for id: " + id));
+
+		entity.setName(supplier.getName());
+		entity.setEmail(supplier.getEmail());
+		entity.setPhone(supplier.getPhone());
+		entity.setCnpj(supplier.getCnpj());
+
+		Supplier updatedSupplier = supplierRepository.save(entity);
+
+		return new SupplierDTO(updatedSupplier);
+	}
+
 }

@@ -50,4 +50,13 @@ public class SupplierController {
 				.buildAndExpand(supplierDto.getId()).toUri();
 		return ResponseEntity.created(uri).body(supplierDto);
 	}
+	
+	@RequestMapping(
+			value = "/updatesupplier/{id}", consumes = "application/json" , method = RequestMethod.PUT)
+	@ResponseBody
+	public ResponseEntity<SupplierDTO> updateSupplier(@PathVariable(name = "id") Long id ,@RequestBody SupplierDTO supplierDto) {
+		supplierDto = supplierService.updateSupplier(id, supplierDto);
+		
+		return ResponseEntity.ok().body(supplierDto);
+	}
 }
