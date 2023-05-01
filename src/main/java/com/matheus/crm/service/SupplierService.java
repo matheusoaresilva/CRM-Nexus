@@ -23,11 +23,7 @@ public class SupplierService {
 	@Transactional(readOnly = true)
 	public SupplierDTO findSupplierById(Long id){
 		Optional<Supplier> supplierOptional = supplierRepository.findById(id);
-		if (!supplierOptional.isPresent()) {
-			throw new NotFoundException("ID: " + id + " not found!");
-		}
-		
-		Supplier entity = supplierOptional.get();
+		Supplier entity = supplierOptional.orElseThrow(() -> new NotFoundException("ID: " + id + " not found!"));
 		return new SupplierDTO(entity);
 	}
 	
