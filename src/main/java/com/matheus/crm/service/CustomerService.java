@@ -38,7 +38,17 @@ public class CustomerService {
 	}
 	
 	@Transactional
-	public Customer addCustomer(Customer customer) {
-		return customerRepository.save(customer);
+	public CustomerDTO addCustomer(CustomerDTO customer) {
+		Customer entity = new Customer();
+		entity.setFirstName(customer.getFirstName());
+		entity.setLastName(customer.getLastName());
+		entity.setDateBirth(customer.getDateBirth());
+		entity.setCpf(customer.getCpf());
+		entity.setGender(customer.getGender());
+		entity.setPhone(customer.getPhone());
+		entity.setEmail(customer.getEmail());
+
+		entity = customerRepository.save(entity);
+		return new CustomerDTO(entity);
 	}
 }

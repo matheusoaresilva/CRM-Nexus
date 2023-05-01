@@ -1,5 +1,6 @@
 package com.matheus.crm.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.CustomerDTO;
-import com.matheus.crm.entity.Customer;
 import com.matheus.crm.service.CustomerService;
 
 @Controller
@@ -43,8 +44,10 @@ public class CustomerController {
 	@RequestMapping(
 			value = "/createcustomer", consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
-	public Customer createCustomer(@RequestBody Customer customer) {
-		Customer newCustomer = customerService.addCustomer(customer);
-		return newCustomer;
+	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDto) {
+		customerDto = customerService.addCustomer(customerDto);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(customerDto.getId()).toUri();
+		return ResponseEntity.created(uri).body(customerDto);
 	}
 }
