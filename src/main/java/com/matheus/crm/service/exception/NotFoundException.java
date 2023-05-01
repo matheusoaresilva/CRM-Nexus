@@ -1,4 +1,4 @@
-package com.matheus.crm.exception;
+package com.matheus.crm.service.exception;
 
 public class NotFoundException extends RuntimeException{
 
