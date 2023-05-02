@@ -5,12 +5,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.SupplierDTO;
 import com.matheus.crm.entity.Supplier;
 import com.matheus.crm.repository.SupplierRepository;
+import com.matheus.crm.service.exception.DatabaseException;
 import com.matheus.crm.service.exception.NotFoundException;
 
 @Service
@@ -32,6 +35,17 @@ public class SupplierService {
 
 		List<SupplierDTO> listdDto = list.stream().map(x -> new SupplierDTO(x)).collect(Collectors.toList());
 		return listdDto;
+	}
+	
+	public void deleteSupplierById(Long id) {
+		try {
+			supplierRepository.deleteById(id);
+		} catch (EmptyResultDataAccessException e) {
+			throw new NotFoundException("Id not found!");
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
+		}
 	}
 
 	@Transactional
