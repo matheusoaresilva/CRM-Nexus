@@ -48,18 +48,9 @@ public class ProductController {
 	@RequestMapping(
 			value = "/deleteproduct/{sku}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResponseEntity<?> deleteProducts(@PathVariable(name = "sku")Integer sku){
-		try {
-			Product deletedProduct =  productService.deleteProductBySku(sku);
-			if (deletedProduct == null) {
-				return ResponseEntity.notFound().build();
-			}
-			System.out.println("sku: " + sku + " deleted");
-			return ResponseEntity.noContent().build();
-			
-		} catch (NotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<Void> deleteProducts(@PathVariable(name = "sku")Integer sku){
+		productService.deleteProductBySku(sku);
+		return ResponseEntity.noContent().build();
 	}
 	
 	
