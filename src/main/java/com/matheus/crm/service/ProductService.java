@@ -5,11 +5,14 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.matheus.crm.dto.ProductDTO;
 import com.matheus.crm.entity.Product;
+import com.matheus.crm.service.exception.DatabaseException;
 import com.matheus.crm.service.exception.NotFoundException;
 
 import com.matheus.crm.repository.ProductRepository;
@@ -38,14 +41,15 @@ public class ProductService {
 	}
 	
 	@Transactional
-	public Product deleteProductBySku(Integer sku) {
-		Optional<Product> optionalProduct = productRepository.findProductBySku(sku);
-		if (!optionalProduct.isPresent()) {
-			throw new NotFoundException("Product with SKU: " + sku + " not found!");
+	public void deleteProductBySku(Integer sku) {
+		try {
+			productRepository.deleteBySku(sku);
+		} catch (EmptyResultDataAccessException e) {
+			throw new NotFoundException("SKU not found!");
 		}
-		Product product = optionalProduct.get();
-		productRepository.delete(product);
-		return product;
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
+		};
 		
 	}
 	
