@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.matheus.crm.dto.CustomerDTO;
 import com.matheus.crm.entity.Customer;
 import com.matheus.crm.repository.CustomerRepository;
+import com.matheus.crm.service.exception.DatabaseException;
 import com.matheus.crm.service.exception.NotFoundException;
 
 @Service
@@ -77,8 +79,8 @@ public class CustomerService {
 		} catch (EmptyResultDataAccessException e) {
 			throw new NotFoundException("Id not found!");
 		}
-//		catch (DataIntegrityViolationException e) {
-//			throw new DatabaseException("Integrity violation");
-//		}
+		catch (DataIntegrityViolationException e) {
+			throw new DatabaseException("Integrity violation");
+		}
 	}
 }
