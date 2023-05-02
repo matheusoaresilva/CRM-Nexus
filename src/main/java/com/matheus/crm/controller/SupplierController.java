@@ -42,6 +42,15 @@ public class SupplierController {
 	}
 	
 	@RequestMapping(
+			value = "/deletesupplier/{id}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id) {
+		supplierService.deleteSupplierById(id);
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	@RequestMapping(
 			value = "/createsupplier", consumes = "application/json", method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<SupplierDTO> createsupplier(@RequestBody SupplierDTO supplierDto) {
