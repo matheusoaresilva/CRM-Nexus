@@ -9,52 +9,54 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Table(name = "category")
-@Entity(name = "category")
-public class Category implements Serializable{
+
+@Table(name = "payment")
+@Entity(name = "payment")
+public class Payment implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column
-	private String name;
+    private String name;
 	@Column
-	private String description;
-
-	public Category() {
+    private Integer invoicingDay;
+	
+	
+	
+	public Payment() {
 	}
 
-	public Category(Long id, String name, String description) {
-
+	public Payment(Long id, String name, Integer invoicingDay) {
 		this.id = id;
 		this.name = name;
-		this.description = description;
+		this.invoicingDay = invoicingDay;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public String getDescription() {
-		return description;
+	public Integer getInvoicingDay() {
+		return invoicingDay;
+	}
+	public void setInvoicingDay(Integer invoicingDay) {
+		this.invoicingDay = invoicingDay;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
+    //Adicionar metodo de calcular taxa
+	
+	
+    
 }

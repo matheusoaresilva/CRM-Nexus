@@ -1,10 +1,14 @@
 package com.matheus.crm.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "product")
 @Entity(name = "product")
-public class Product {
+public class Product implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

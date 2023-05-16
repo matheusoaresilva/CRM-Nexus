@@ -2,6 +2,7 @@ package com.matheus.crm.dto;
 
 import java.io.Serializable;
 
+import com.matheus.crm.entity.Address;
 import com.matheus.crm.entity.Supplier;
 
 public class SupplierDTO implements Serializable {
@@ -13,6 +14,8 @@ public class SupplierDTO implements Serializable {
 	public String email;
 	public String phone;
 	public String cnpj;
+	public Address address;
+//	public List<Product> products;
 
 	public SupplierDTO(Supplier entity) {
 		this.id = entity.getId();
@@ -20,18 +23,22 @@ public class SupplierDTO implements Serializable {
 		this.email = entity.getEmail();
 		this.phone = entity.getPhone();
 		this.cnpj = entity.getCnpj();
+		this.address = entity.getAddress();
+//		this.products = entity.getProducts();
 	}
 
 	public SupplierDTO() {
 
 	}
 
-	public SupplierDTO(Long id, String name, String email, String phone, String cnpj) {
+	public SupplierDTO(Long id, String name, String email, String phone, String cnpj, Address address) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.cnpj = cnpj;
+		this.address = address;
+//		this.products = products;
 	}
 
 	public Long getId() {
@@ -73,5 +80,23 @@ public class SupplierDTO implements Serializable {
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+//	public List<Product> getProducts() {
+//		return products;
+//	}
+//
+//	public void setProducts(List<Product> products) {
+//		this.products = products;
+//	}
+	
+	
 
 }

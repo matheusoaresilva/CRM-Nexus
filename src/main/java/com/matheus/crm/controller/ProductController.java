@@ -1,7 +1,7 @@
 package com.matheus.crm.controller;
 
 import java.net.URI;
-import java.util.List; 
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.matheus.crm.dto.ProductDTO;
-import com.matheus.crm.entity.Product;
-import com.matheus.crm.service.exception.NotFoundException;
-
 import com.matheus.crm.service.ProductService;
 
 @Controller

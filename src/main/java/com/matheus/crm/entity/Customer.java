@@ -1,5 +1,6 @@
 package com.matheus.crm.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -14,7 +15,9 @@ import javax.persistence.Table;
 
 @Table(name = "customer")
 @Entity(name = "customer")
-public class Customer {
+public class Customer implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

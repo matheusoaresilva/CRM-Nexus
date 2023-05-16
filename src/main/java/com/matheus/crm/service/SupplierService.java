@@ -55,6 +55,8 @@ public class SupplierService {
 		entity.setEmail(supplier.getEmail());
 		entity.setPhone(supplier.getPhone());
 		entity.setCnpj(supplier.getCnpj());
+		entity.setAddress(supplier.getAddress());
+//		entity.setProducts(supplier.getProducts());
 
 		entity = supplierRepository.save(entity);
 		return new SupplierDTO(entity);
@@ -69,6 +71,8 @@ public class SupplierService {
 		entity.setEmail(supplier.getEmail());
 		entity.setPhone(supplier.getPhone());
 		entity.setCnpj(supplier.getCnpj());
+		entity.setAddress(supplier.getAddress());
+//		entity.setProducts(supplier.getProducts());
 
 		Supplier updatedSupplier = supplierRepository.save(entity);
 

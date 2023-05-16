@@ -1,7 +1,8 @@
 package com.matheus.crm.entity;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,7 +14,9 @@ import javax.persistence.Table;
 
 @Table(name = "supplier")
 @Entity(name = "supplier")
-public class Supplier {
+public class Supplier implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,25 +30,25 @@ public class Supplier {
 	@Column
 	private String cnpj;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "address_id")
-//    private Address address;
+	@ManyToOne(cascade = CascadeType.REMOVE)
+	@JoinColumn(name = "address_id")
+    private Address address;
 	
-//	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-//	private List<Product> products;
+//	@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<Product> products = new ArrayList<>();
 
 	public Supplier() {
 
 	}
 
-	public Supplier(Long id, String name, String email, String phone, String cnpj, Address address, ArrayList<Product> products) {
+	public Supplier(Long id, String name, String email, String phone, String cnpj, Address address) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.phone = phone;
 		this.cnpj = cnpj;
 //		this.products = products;
-//		this.address = address;
+		this.address = address;
 	}
 
 	public Long getId() {
@@ -89,6 +92,8 @@ public class Supplier {
 	}
 
 	
+	
+
 //	public List<Product> getProducts() {
 //		return products;
 //	}
@@ -97,13 +102,13 @@ public class Supplier {
 //		this.products = products;
 //	}
 
-//	public Address getAddress() {
-//		return address;
-//	}
-//
-//	public void setAddress(Address address) {
-//		this.address = address;
-//	}
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 	
 
 }
