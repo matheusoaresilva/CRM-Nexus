@@ -1,5 +1,8 @@
 package com.matheus.crm.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,22 +22,44 @@ public class UserService {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Transactional
-	public UserDTO addUser(UserDTO user) {
+	
+	public User execute(User user) {
 		
+		User existsUser = userRepository.findByUsername(user.getUsername());
 		
-		if (userRepository.existsByUsername(user.getUsername())) {
-			throw new IllegalArgumentException("Username already exists!");
+		if (existsUser != null) {
+			throw new IllegalArgumentException("O nome de usuário já está em uso.");
 		}
 		
-		User entity = new User();
-		entity.setName(user.getName());
-		entity.setUsername(user.getUsername());
-		entity.setPassword(passwordEncoder().encode(user.getPassword()));
+		user.setPassword(passwordEncoder().encode(user.getPassword()));
 		
-		entity = userRepository.save(entity);
-		return new UserDTO(entity);
+		User createdUser = userRepository.save(user);
 		
+		return createdUser;
+		
+//		if (userRepository.existsByUsername(user.getUsername())) {
+//	        throw new IllegalArgumentException("O nome de usuário já está em uso.");
+//	    }
+//		
+//		User entity = new User();
+//		
+//		
+//		entity.setName(user.getName());
+//		entity.setUsername(user.getUsername());
+//		entity.setPassword(passwordEncoder().encode(user.getPassword()));
+//		entity.setRoles(user.getRoles());
+//		
+//		entity = userRepository.save(entity);
+//		return new UserDTO(entity);
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public List<UserDTO> findAllUsers() {
+		List<User> list = userRepository.findAll();
+
+		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+		return listDto;
 	}
 	
 	
