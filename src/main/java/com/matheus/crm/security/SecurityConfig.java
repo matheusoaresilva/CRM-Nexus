@@ -24,10 +24,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig{
 
 	@Autowired
-	Filter filterToken;
+	FilterToken filterToken;
 
-//	@Autowired
-//	CustomUserDetailsService userDetailsService;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -40,21 +38,15 @@ public class SecurityConfig{
 		return  auth.getAuthenticationManager();
 	}
 	
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception{
-//		http.csrf().disable()
-//		.authorizeRequests().antMatchers("/user/role", "/user/create").permitAll().and()
-//		.httpBasic();
-//	}
-	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
 		return http.csrf().disable()    //desabilita csrf
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()
 				.authorizeHttpRequests()  // requisicoes http sao passiveis de autorizacao
-				.antMatchers("/user/create").permitAll() //especificando quem é liberado
-				.antMatchers("/user/role").permitAll()
+				.antMatchers(HttpMethod.POST, "/user/create").permitAll() //especificando quem é liberado
+//				.antMatchers(HttpMethod.GET,"/getusers").permitAll()
+				.antMatchers(HttpMethod.POST,"/login").permitAll()
 				.anyRequest().authenticated()
 				.and().addFilterBefore(filterToken, UsernamePasswordAuthenticationFilter.class) // todas as outras URLS terao necessidade de autenticacao e sofrerao as restricoes do cor
 				.build();

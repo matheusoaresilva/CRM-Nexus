@@ -22,25 +22,21 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User implements UserDetails {
 
-
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String login;
 	private String name;
 	private String username;
 	private String password;
-
 	private String role;
-//	@ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//        name = "user_roles",
-//        joinColumns = @JoinColumn(name = "user_id"),
-//        inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//	private List<Role> roles;
+
+	public User() {}
+
+
+	public Long getId() {
+		return id;
+	}
 
 
 	@Override
@@ -78,21 +74,8 @@ public class User implements UserDetails {
 		return true;
 	}
 
-
-	public Long getId() {
-		return id;
-	}
-
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getName() {

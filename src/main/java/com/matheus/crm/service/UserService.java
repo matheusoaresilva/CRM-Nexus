@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.matheus.crm.dto.UserDTO;
 import com.matheus.crm.entity.User;
 import com.matheus.crm.repository.UserRepository;
 
@@ -54,13 +53,13 @@ public class UserService {
 		
 	}
 	
-	@Transactional(readOnly = true)
-	public List<UserDTO> findAllUsers() {
-		List<User> list = userRepository.findAll();
-
-		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
-		return listDto;
-	}
+//	@Transactional(readOnly = true)
+//	public List<UserDTO> findAllUsers() {
+//		List<User> list = (List<User>) userRepository.findAll();
+//
+//		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
+//		return listDto;
+//	}
 	
 	
 	
