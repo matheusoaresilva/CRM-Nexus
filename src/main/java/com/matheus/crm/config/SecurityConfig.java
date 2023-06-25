@@ -19,6 +19,7 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeHttpRequests()
+                .antMatchers("/teste").permitAll()
                 .antMatchers("/auth/create").permitAll()
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/user/all").hasRole("ADMIN")
