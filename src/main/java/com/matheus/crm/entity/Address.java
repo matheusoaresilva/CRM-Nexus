@@ -32,14 +32,7 @@ public class Address implements Serializable{
 	private String country;
 	@Column
 	private String zipcode;
-	
-//	@ManyToOne
-//	@JoinColumn(name = "customer_id")
-//    private Customer customer;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "supplier_id")
-//    private Supplier supplier;
+
 
 	public Address() {
 	}

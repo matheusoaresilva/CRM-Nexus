@@ -19,9 +19,12 @@ public class SecurityConfig {
                 .httpBasic()
                 .and()
                 .authorizeHttpRequests()
-                .antMatchers("/user/create").permitAll()
-                .antMatchers("/user/login").permitAll()
+                .antMatchers("/auth/create").permitAll()
+                .antMatchers("/auth/login").permitAll()
                 .antMatchers("/user/all").hasRole("ADMIN")
+                .antMatchers("/user/find/**").hasRole("ADMIN")
+                .antMatchers("/user/delete/**").hasRole("ADMIN")
+                .antMatchers("/user/update/**").hasAnyRole("ADMIN", "USER")
                 .and()
                 .csrf().disable();
         return http.build();

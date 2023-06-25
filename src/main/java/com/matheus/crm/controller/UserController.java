@@ -60,6 +60,14 @@ public class UserController {
             value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public ResponseEntity<Void> deleteUser(@PathVariable(name = "id") Long id) {
+        UserModelDTO userDto = userService.findUserById(id);
+
+        if (userDto == null){
+            System.out.println("User not found");
+            return ResponseEntity.notFound().build();
+        }
+
+        userDto.getRoles().clear();
         userService.deleteById(id);
         return ResponseEntity.noContent().build();
 

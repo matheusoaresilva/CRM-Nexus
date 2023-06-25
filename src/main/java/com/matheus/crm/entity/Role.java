@@ -1,3 +1,4 @@
+/*
 package com.matheus.crm.entity;
 
 
@@ -53,3 +54,4 @@ public class Role implements GrantedAuthority, Serializable {
 		this.roleName = roleName;
 	}
 }
+*/

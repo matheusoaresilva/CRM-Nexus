@@ -40,12 +40,7 @@ public class Customer implements Serializable{
 	@OneToOne(cascade = CascadeType.REMOVE)
 	@JoinColumn(name = "address_id")
 	private Address address;
-	
-//	@OneToMany(mappedBy = "customer")
-//	private List<Address> address;
-	
-	
-//    private ArrayList<Order> orders = new ArrayList<>();
+
 
 	public Customer() {
 

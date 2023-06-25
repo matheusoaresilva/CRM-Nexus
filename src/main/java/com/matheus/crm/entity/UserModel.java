@@ -1,5 +1,6 @@
 package com.matheus.crm.entity;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,9 +25,11 @@ public class UserModel implements UserDetails {
 	@Column
 	private String password;
 
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
 	@Column(name = "role")
+	@Cascade(org.hibernate.annotations.CascadeType.ALL)
 	private Set<String> roles;
 
 
