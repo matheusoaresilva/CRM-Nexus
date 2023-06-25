@@ -1,16 +1,14 @@
 package com.matheus.crm.repository;
 
+import com.matheus.crm.entity.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.matheus.crm.entity.User;
+import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<UserModel, Long> {
 
 
-	boolean existsByUsername(String username);
-
-
-	User findByUsername(String username);
+	Optional<UserModel> findByUsername(String username);
 }

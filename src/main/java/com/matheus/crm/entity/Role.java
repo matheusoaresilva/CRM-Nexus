@@ -1,27 +1,36 @@
 package com.matheus.crm.entity;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.matheus.crm.entity.enums.LevelAccess;
+import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements GrantedAuthority, Serializable {
+	private static final long serialVersionUID = 1L;
 
 	  @Id
-	  @GeneratedValue
+	  @GeneratedValue(strategy = GenerationType.IDENTITY)
 	  private Long id;
-	  private String name;
-	  
-	  
-	  public Role() {
+	  @Enumerated(EnumType.STRING)
+	  @Column(nullable = false)
+	  private LevelAccess roleName;
+
+	@Override
+	public String getAuthority() {
+		return this.getRoleName().toString();
 	}
 
-	public Role(Long id, String name) {
+	  public Role() {
+		}
+
+	public Role(Long id, LevelAccess roleName) {
 		this.id = id;
-		this.name = name;
+		this.roleName = roleName;
 	}
 
 	public Role(Long id) {
@@ -36,14 +45,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public LevelAccess getRoleName() {
+		return roleName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRoleName(LevelAccess roleName) {
+		this.roleName = roleName;
 	}
-	
-	  
-	  
 }

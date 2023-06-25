@@ -10,7 +10,7 @@
 //
 //import com.matheus.crm.dto.UserRoleDTO;
 //import com.matheus.crm.entity.Role;
-//import com.matheus.crm.entity.User;
+//import com.matheus.crm.entity.UserModel;
 //import com.matheus.crm.repository.UserRepository;
 //
 //@Service
@@ -19,20 +19,20 @@
 //	@Autowired
 //	UserRepository userRepository;
 //
-//	public User execute(UserRoleDTO userRoleDTO) {
+//	public UserModel execute(UserRoleDTO userRoleDTO) {
 //
-//		Optional<User> userExists = userRepository.findById(userRoleDTO.getIdUser());
+//		Optional<UserModel> userExists = userRepository.findById(userRoleDTO.getIdUser());
 //		List<Role> roles = new ArrayList<>();
 //
 //		if (userExists.isEmpty()) {
-//			throw new Error("User does not exists!");
+//			throw new Error("UserModel does not exists!");
 //		}
 //
 //		roles = userRoleDTO.getIdsRoles().stream().map(role -> {
 //			return new Role(role);
 //		}).collect(Collectors.toList());
 //
-//		User user = userExists.get();
+//		UserModel user = userExists.get();
 //
 //		user.setRoles(roles);
 //

@@ -1,26 +1,36 @@
 package com.matheus.crm.entity;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class UserModel implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	@Column
 	private String name;
+	@Column
 	private String username;
+	@Column
 	private String password;
-	private String role;
 
-	public User() {}
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+	@Column(name = "role")
+	private Set<String> roles;
+
+
+	public UserModel() {}
 
 	public Long getId() {
 		return id;
@@ -29,7 +39,10 @@ public class User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+
+		return roles.stream()
+				.map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
 	}
 
 	@Override
@@ -82,11 +95,11 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public Set<String> getRoles() {
+		return roles;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setRoles(Set<String> roles) {
+		this.roles = roles;
 	}
 }

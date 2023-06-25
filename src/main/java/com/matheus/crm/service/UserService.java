@@ -1,62 +1,38 @@
 package com.matheus.crm.service;
 
+import com.matheus.crm.entity.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.matheus.crm.entity.User;
 import com.matheus.crm.repository.UserRepository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
 
 	@Autowired
-	UserRepository userRepository;
-	
-	private BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	private UserRepository repository;
+
+	public UserModel Create(UserModel model){
+		return repository.save(model);
 	}
-	
-	
-	public User execute(User user) {
-		
-		User existsUser = userRepository.findByUsername(user.getUsername());
-		
-		if (existsUser != null) {
-			throw new IllegalArgumentException("O nome de usuário já está em uso.");
-		}
-		
-		user.setPassword(passwordEncoder().encode(user.getPassword()));
-		
-		User createdUser = userRepository.save(user);
-		
-		return createdUser;
-		
-//		if (userRepository.existsByUsername(user.getUsername())) {
-//	        throw new IllegalArgumentException("O nome de usuário já está em uso.");
-//	    }
-//		
-//		User entity = new User();
-//		
-//		
-//		entity.setName(user.getName());
-//		entity.setUsername(user.getUsername());
-//		entity.setPassword(passwordEncoder().encode(user.getPassword()));
-//		entity.setRoles(user.getRoles());
-//		
-//		entity = userRepository.save(entity);
-//		return new UserDTO(entity);
-		
+
+	public Optional<UserModel> getUserById(Long id) {
+		return repository.findById(id);
 	}
-	
-//	@Transactional(readOnly = true)
-//	public List<UserDTO> findAllUsers() {
-//		List<User> list = (List<User>) userRepository.findAll();
-//
-//		List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
-//		return listDto;
-//	}
-	
-	
-	
+
+	public UserModel updateUser(UserModel User){
+		return repository.save(User);
+	}
+
+	public List<UserModel> findAll(){
+		return repository.findAll();
+	}
+
+	public void deleteById(Long id){
+		repository.deleteById(id);
+	}
 }
