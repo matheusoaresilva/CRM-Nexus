@@ -102,4 +102,6 @@ public class UserModel implements UserDetails {
 	public void setRoles(Set<String> roles) {
 		this.roles = roles;
 	}
+
+
 }
