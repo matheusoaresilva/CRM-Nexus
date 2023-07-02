@@ -1,0 +1,89 @@
+package com.matheus.crm.controller;
+
+import java.util.Date;
+import java.util.List;
+
+import com.matheus.crm.entity.UserModel;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.matheus.crm.repository.UserRepository;
+
+
+@RestController
+public class UserController {
+
+	@Autowired
+	UserRepository userRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+
+
+
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@RequestMapping(
+			value = "/users", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<UserModel>> getUsers() {
+		List<UserModel> userModelList = userRepository.findAll();
+
+		System.out.println("ENTROU CONTROLLER GETUSERS");
+		return ResponseEntity.ok(userModelList);
+
+	}
+
+
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+	@RequestMapping(
+			value = "/user/create", consumes = "application/json", method = RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> createUser(@RequestBody UserModel userModel) {
+		// Verifica se o usuário já existe
+		if (userRepository.findByUsername(userModel.getUsername()) != null) {
+			return new ResponseEntity<>("Usuário já existe", HttpStatus.BAD_REQUEST);
+		}
+
+		// Criptografa a senha antes de salvar no banco de dados
+		userModel.setPassword(passwordEncoder.encode(userModel.getPassword()));
+		userRepository.save(userModel);
+		return ResponseEntity.ok("Usuário criado com sucesso");
+	}
+
+
+	private String generateJwtToken(String username, String role) {
+		// Gera uma chave segura para o algoritmo HS256
+		byte[] signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256).getEncoded();
+
+		// Define a duração do token em milissegundos (1 hora neste exemplo)
+		long tokenExpiration = 3600000;
+
+		// Gera o token JWT
+		String token = Jwts.builder()
+				.setSubject(username)
+				.claim("role", role)
+				.setExpiration(new Date(System.currentTimeMillis() + tokenExpiration))
+				.signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS256)
+				.compact();
+
+		return token;
+	}
+
+
+
+
+
+}
