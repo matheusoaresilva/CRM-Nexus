@@ -1,6 +1,7 @@
 package com.matheus.crm.order.service;
 
 import com.matheus.crm.order.dto.OrderDTO;
+import com.matheus.crm.order.dto.StatusDTO;
 import com.matheus.crm.order.entity.OrderEntity;
 import com.matheus.crm.order.entity.enums.Status;
 import com.matheus.crm.order.repository.OrderRepository;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -35,11 +37,37 @@ public class OrderService {
 
         entity.setRequestedDate(LocalDateTime.now());
         entity.setStatus(Status.REALIZED);
+        entity.getItems().addAll(dto.getSaleItem());
+
         entity.getItems().forEach(saleItem -> saleItem.setOrder(entity));
 
         OrderEntity save = repository.save(entity);
 
         return new OrderDTO(entity);
+    }
+
+    public OrderDTO updateStatus(Long id, StatusDTO status){
+        OrderEntity order = repository.findByIdFetchItens(id);
+
+        if (order == null){
+            throw new EntityNotFoundException();
+        }
+
+        order.setStatus(status.getStatus());
+        repository.updateStatusByPedido(status.getStatus(), order);
+
+        return  new OrderDTO(order);
+    }
+
+    public void updatePayment(Long id){
+        OrderEntity order = repository.findByIdFetchItens(id);
+
+        if (order == null){
+            throw new EntityNotFoundException();
+        }
+
+        order.setStatus(Status.PAID);
+        repository.updateStatusByPedido(Status.PAID, order);
     }
 
 }

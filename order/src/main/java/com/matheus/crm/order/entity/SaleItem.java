@@ -21,6 +21,6 @@ public class SaleItem {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     private OrderEntity order;
 }
