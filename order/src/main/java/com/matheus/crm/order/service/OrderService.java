@@ -26,14 +26,21 @@ public class OrderService {
     @Autowired
     private final ModelMapper modelMapper;
 
-//    @Transactional(readOnly = true)
-//    public List<OrderDTO> findAllOrders() {
-//        List<OrderEntity> list = repository.findAll();
-//
-//        List<OrderDTO> listDto = list.stream()
-//                .map(x -> new OrderDTO(x)).collect(Collectors.toList());
-//        return listDto;
-//    }
+    @Transactional(readOnly = true)
+    public List<OrderDTO> findAllOrders() {
+        List<OrderEntity> list = repository.findAll();
+
+        List<OrderDTO> listDto = list.stream()
+                .map(x -> modelMapper.map(x, OrderDTO.class)).collect(Collectors.toList());
+        return listDto;
+    }
+
+    public OrderDTO findOrderById(Long id){
+        OrderEntity order = repository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+
+        return modelMapper.map(order, OrderDTO.class);
+    }
 
     @Transactional
     public OrderDTO createOrder(OrderDTO dto){
@@ -49,18 +56,18 @@ public class OrderService {
         return modelMapper.map(entity, OrderDTO.class);
     }
 
-//    public OrderDTO updateStatus(Long id, StatusDTO status){
-//        OrderEntity order = repository.findByIdFetchItens(id);
-//
-//        if (order == null){
-//            throw new EntityNotFoundException();
-//        }
-//
-//        order.setStatus(status.getStatus());
-//        repository.updateStatusByPedido(status.getStatus(), order);
-//
-//        return  new OrderDTO(order);
-//    }
+    public OrderDTO updateStatus(Long id, StatusDTO status){
+        OrderEntity order = repository.findByIdFetchItens(id);
+
+        if (order == null){
+            throw new EntityNotFoundException();
+        }
+
+        order.setStatus(status.getStatus());
+        repository.updateStatusByPedido(status.getStatus(), order);
+
+        return  modelMapper.map(order, OrderDTO.class);
+    }
 
     public void updatePayment(Long id){
         OrderEntity order = repository.findByIdFetchItens(id);
