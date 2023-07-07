@@ -3,6 +3,7 @@ package com.matheus.crm.order.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 @Data
@@ -14,13 +15,12 @@ public class SaleItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotNull
     @Positive
     private Integer quantity;
 
-    @Column(nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private OrderEntity order;
 }

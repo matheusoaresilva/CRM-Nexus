@@ -6,6 +6,7 @@ import com.matheus.crm.order.entity.OrderEntity;
 import com.matheus.crm.order.entity.enums.Status;
 import com.matheus.crm.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,42 +23,44 @@ public class OrderService {
     @Autowired
     OrderRepository repository;
 
-    @Transactional(readOnly = true)
-    public List<OrderDTO> findAllOrders() {
-        List<OrderEntity> list = repository.findAll();
+    @Autowired
+    private final ModelMapper modelMapper;
 
-        List<OrderDTO> listDto = list.stream()
-                .map(x -> new OrderDTO(x)).collect(Collectors.toList());
-        return listDto;
-    }
+//    @Transactional(readOnly = true)
+//    public List<OrderDTO> findAllOrders() {
+//        List<OrderEntity> list = repository.findAll();
+//
+//        List<OrderDTO> listDto = list.stream()
+//                .map(x -> new OrderDTO(x)).collect(Collectors.toList());
+//        return listDto;
+//    }
 
     @Transactional
     public OrderDTO createOrder(OrderDTO dto){
-        OrderEntity entity = new OrderEntity();
+        OrderEntity entity = modelMapper.map(dto, OrderEntity.class);
 
         entity.setRequestedDate(LocalDateTime.now());
         entity.setStatus(Status.REALIZED);
-        entity.getItems().addAll(dto.getSaleItem());
 
         entity.getItems().forEach(saleItem -> saleItem.setOrder(entity));
 
         OrderEntity save = repository.save(entity);
 
-        return new OrderDTO(entity);
+        return modelMapper.map(entity, OrderDTO.class);
     }
 
-    public OrderDTO updateStatus(Long id, StatusDTO status){
-        OrderEntity order = repository.findByIdFetchItens(id);
-
-        if (order == null){
-            throw new EntityNotFoundException();
-        }
-
-        order.setStatus(status.getStatus());
-        repository.updateStatusByPedido(status.getStatus(), order);
-
-        return  new OrderDTO(order);
-    }
+//    public OrderDTO updateStatus(Long id, StatusDTO status){
+//        OrderEntity order = repository.findByIdFetchItens(id);
+//
+//        if (order == null){
+//            throw new EntityNotFoundException();
+//        }
+//
+//        order.setStatus(status.getStatus());
+//        repository.updateStatusByPedido(status.getStatus(), order);
+//
+//        return  new OrderDTO(order);
+//    }
 
     public void updatePayment(Long id){
         OrderEntity order = repository.findByIdFetchItens(id);

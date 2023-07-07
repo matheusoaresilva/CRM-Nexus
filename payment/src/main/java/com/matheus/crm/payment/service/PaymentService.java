@@ -3,7 +3,6 @@ package com.matheus.crm.payment.service;
 import com.matheus.crm.payment.dto.PaymentDTO;
 import com.matheus.crm.payment.entity.Payment;
 import com.matheus.crm.payment.entity.enums.Status;
-//import com.matheus.crm.payment.http.OrderClient;
 import com.matheus.crm.payment.repository.PaymentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

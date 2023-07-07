@@ -21,15 +21,7 @@ public class OrderDTO implements Serializable {
 
     public Long id;
     public LocalDateTime requestedDate;
-    public List<SaleItem> saleItem = new ArrayList<>();
+    public List<SaleItemDTO> items = new ArrayList<>();
     public Status status;
-    public Long shippingCompanyId;
 
-    public OrderDTO(OrderEntity entity) {
-        this.id = entity.getId();
-        this.requestedDate = entity.getRequestedDate();
-        this.saleItem = entity.getItems();
-        this.status = entity.getStatus();
-        this.shippingCompanyId = entity.getShippingCompanyId();
-    }
 }

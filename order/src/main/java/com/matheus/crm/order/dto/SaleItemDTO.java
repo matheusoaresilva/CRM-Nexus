@@ -19,9 +19,4 @@ public class SaleItemDTO implements Serializable {
 
     public String description;
 
-    public SaleItemDTO(SaleItem entity){
-        this.id = entity.getId();
-        this.quantity = entity.getQuantity();
-        this.description = entity.getDescription();
-    }
 }

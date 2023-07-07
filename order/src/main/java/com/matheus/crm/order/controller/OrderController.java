@@ -20,14 +20,14 @@ public class OrderController {
     @Autowired
     OrderService service;
 
-    @GetMapping()
-    public ResponseEntity<List<OrderDTO>> getOrders(){
-        List<OrderDTO> orders =  service.findAllOrders();
-        if (orders.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok().body(orders);
-    }
+//    @GetMapping()
+//    public ResponseEntity<List<OrderDTO>> getOrders(){
+//        List<OrderDTO> orders =  service.findAllOrders();
+//        if (orders.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        }
+//        return ResponseEntity.ok().body(orders);
+//    }
 
     @PostMapping()
     public ResponseEntity<OrderDTO> placeOrder(@RequestBody @Valid OrderDTO dto, UriComponentsBuilder builder){
@@ -38,12 +38,12 @@ public class OrderController {
         return ResponseEntity.created(uri).body(order);
     }
 
-    @PutMapping("/{id}/status")
-    public ResponseEntity<OrderDTO> updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
-        OrderDTO dto = service.updateStatus(id, statusDTO);
-
-        return ResponseEntity.ok(dto);
-    }
+//    @PutMapping("/{id}/status")
+//    public ResponseEntity<OrderDTO> updateStatus(@PathVariable Long id, @RequestBody StatusDTO statusDTO){
+//        OrderDTO dto = service.updateStatus(id, statusDTO);
+//
+//        return ResponseEntity.ok(dto);
+//    }
 
 
     @PutMapping("/{id}/paid")

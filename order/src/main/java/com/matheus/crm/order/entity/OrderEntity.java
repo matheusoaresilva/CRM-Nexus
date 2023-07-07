@@ -25,20 +25,16 @@ public class OrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "requested_date")
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT-3")
-    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+//    @Column(name = "requested_date")
+//    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT-3")
+//    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @NotNull
     private LocalDateTime requestedDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_order")
     private Status status;
 
-    @Column(name = "shipping_company_id")
-    @NotNull
-    private Long shippingCompanyId;
 
-    @Column(nullable = false)
     @OneToMany(mappedBy = "order", cascade = CascadeType.PERSIST)
     private List<SaleItem> items = new ArrayList<>();
 
