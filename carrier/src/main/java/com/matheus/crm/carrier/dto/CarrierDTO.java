@@ -1,6 +1,7 @@
 package com.matheus.crm.carrier.dto;
 
 import com.matheus.crm.carrier.entity.Carrier;
+import com.matheus.crm.carrier.entity.enums.DeliveryStatus;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,12 +20,15 @@ public class CarrierDTO implements Serializable {
     public Long id;
     public String name;
     public UUID trackingCode;
+
+    public DeliveryStatus status;
     public Long orderId;
 
     public CarrierDTO(Carrier entity){
         this.id = entity.getId();
         this.name = entity.getName();
         this.trackingCode = entity.getTrackingCode();
+        this.status = entity.getStatus();
         this.orderId = entity.getOrderId();
     }
 }

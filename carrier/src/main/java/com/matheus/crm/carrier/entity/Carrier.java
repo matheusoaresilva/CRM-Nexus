@@ -1,6 +1,7 @@
 package com.matheus.crm.carrier.entity;
 
 
+import com.matheus.crm.carrier.entity.enums.DeliveryStatus;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,6 +27,9 @@ public class Carrier implements Serializable {
     private String name;
 
     private UUID trackingCode;
+
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status;
     @NotNull
     private Long orderId;
 }
