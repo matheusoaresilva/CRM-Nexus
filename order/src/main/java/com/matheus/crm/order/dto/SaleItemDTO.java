@@ -1,6 +1,5 @@
 package com.matheus.crm.order.dto;
 
-import com.matheus.crm.order.entity.SaleItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

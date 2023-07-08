@@ -22,15 +22,6 @@ public class SupplierController {
     @Autowired
     SupplierService service;
 
-//    @GetMapping()
-//    public ResponseEntity<List<SupplierDTO>> getAll(){
-//        List<SupplierDTO> supplier =  service.findAll();
-//        if (supplier.isEmpty()) {
-//            return ResponseEntity.noContent().build();
-//        }
-//        return ResponseEntity.ok().body(supplier);
-//    }
-
 
     @GetMapping()
     public Page<SupplierDTO> all(@PageableDefault(size = 10) Pageable pageable){
@@ -51,5 +42,12 @@ public class SupplierController {
         URI uri = builder.path("/suppliers/{id}").buildAndExpand(supplier.getId()).toUri();
 
         return ResponseEntity.created(uri).body(supplier);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SupplierDTO> updateSupplier(@PathVariable Long id, @RequestBody SupplierDTO dto){
+        service.updateSupplier(id, dto);
+
+        return ResponseEntity.ok(dto);
     }
 }
