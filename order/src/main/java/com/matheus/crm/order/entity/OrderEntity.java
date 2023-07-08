@@ -22,9 +22,6 @@ public class OrderEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "requested_date")
-//    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss", timezone = "GMT-3")
-//    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     @NotNull
     private LocalDateTime requestedDate;
 

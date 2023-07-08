@@ -14,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
