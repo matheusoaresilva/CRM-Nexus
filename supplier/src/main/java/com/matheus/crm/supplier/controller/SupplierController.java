@@ -1,5 +1,6 @@
 package com.matheus.crm.supplier.controller;
 
+import com.matheus.crm.supplier.dto.ItemsDTO;
 import com.matheus.crm.supplier.dto.SupplierDTO;
 import com.matheus.crm.supplier.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -49,5 +51,12 @@ public class SupplierController {
         service.updateSupplier(id, dto);
 
         return ResponseEntity.ok(dto);
+    }
+
+    @PostMapping("/{id}/items")
+    public ResponseEntity<List<ItemsDTO>> registerItemsForSupplierById(@PathVariable Long id, @RequestBody @Valid List<ItemsDTO> dtos){
+        List<ItemsDTO> dtoList = service.registerItemsForSupplierById(id, dtos);
+
+        return ResponseEntity.ok(dtoList);
     }
 }
