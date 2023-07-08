@@ -26,11 +26,11 @@ public class SupplierService {
     @Autowired
     private final ModelMapper modelMapper;
 
-//    public Page<SupplierDTO> findAllSuppliers(Pageable pageable){
-//        return repository
-//                .findAll(pageable)
-//                .map(p-> modelMapper.map(p, SupplierDTO.class));
-//    }
+    public Page<SupplierDTO> findAllSuppliers(Pageable pageable){
+        return repository
+                .findAll(pageable)
+                .map(p-> modelMapper.map(p, SupplierDTO.class));
+    }
 
     @Transactional(readOnly = true)
     public List<SupplierDTO> findAll() {
