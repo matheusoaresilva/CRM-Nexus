@@ -61,6 +61,8 @@ public class SellerService {
         seller.setProfile(dto.getProfile());
         seller.setAddressId(dto.getAddressId());
 
+        //TODO: resolver bug em profile
+
         Seller saveSeller = repository.save(seller);
 
         return modelMapper.map(seller, SellerDTO.class);
