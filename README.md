@@ -1,6 +1,6 @@
 # CRM Nexus(Em desenvolvimento)
 
-O CRM Nexus é um projeto de Customer Relationship Management (CRM) é um microserviço desenvolvido em Java, utilizando o framework Spring e outras tecnologias relacionadas. Ele fornece uma solução completa para gerenciamento de relacionamento com o cliente, permitindo o registro e o acompanhamento de informações importantes sobre clientes, vendas, pedidos e produtos.
+O CRM Nexus é um projeto de Customer Relationship Management (CRM) composto por vários microserviços desenvolvidos em Java, utilizando o framework Spring e outras tecnologias relacionadas. Cada microserviço é responsável por uma parte específica do projeto, permitindo uma arquitetura modular e escalável
 
 ## Tecnologias Utilizadas
 
