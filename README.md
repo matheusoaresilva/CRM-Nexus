@@ -11,6 +11,11 @@ O projeto utiliza as seguintes tecnologias:
 - Spring Security
 - JPA/Hibernate
 - MySQL
+- Lombok
+- OpenFeign
+- Design Patterns
+- Eureka
+- Gateway
 
 ## Funcionalidades
 
