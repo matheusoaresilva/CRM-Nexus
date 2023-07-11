@@ -1,4 +1,4 @@
-package com.matheus.crm.config;
+package com.matheus.crm.user.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,9 +22,9 @@ public class SecurityConfig {
                 .antMatchers("/teste").permitAll()
                 .antMatchers("/auth/create").permitAll()
                 .antMatchers("/auth/login").permitAll()
-                .antMatchers("/auth/userteste").hasRole("USER") // ALICE
-                .antMatchers("/auth/adminteste").hasRole("ADMIN") // ALINE
-                .antMatchers("/auth/useradminteste").hasAnyRole("USER", "ADMIN") // MATH
+                .antMatchers("/auth/userteste").hasRole("USER")
+                .antMatchers("/auth/adminteste").hasRole("ADMIN")
+                .antMatchers("/auth/useradminteste").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/user/all").hasRole("ADMIN")
                 .antMatchers("/user/find/**").hasRole("ADMIN")
                 .antMatchers("/user/delete/**").hasRole("ADMIN")
@@ -40,4 +40,3 @@ public class SecurityConfig {
     }
 
 }
-
