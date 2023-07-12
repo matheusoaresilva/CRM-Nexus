@@ -17,6 +17,8 @@ O projeto utiliza as seguintes tecnologias:
 - JPA/Hibernate
 - MySQL
 - Lombok
+- Amqp
+- RabbitMQ
 - OpenFeign
 - Design Patterns
 - Eureka
