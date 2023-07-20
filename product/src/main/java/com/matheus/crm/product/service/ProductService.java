@@ -5,6 +5,7 @@ import com.matheus.crm.product.entity.Product;
 import com.matheus.crm.product.repository.ProductRepository;
 import com.matheus.crm.product.service.exception.DatabaseException;
 import com.matheus.crm.product.service.exception.NotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,6 +22,9 @@ public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Transactional(readOnly = true)
     public ProductDTO findProductBySku(Integer sku){
@@ -53,18 +57,9 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO addProduct(ProductDTO product) {
-        Product entity = new Product();
-        entity.setName(product.getName());
-        entity.setDescription(product.getDescription());
-        entity.setPrice(product.getPrice());
-        entity.setImgUrl(product.getImgUrl());
-        entity.setCategory(product.getCategory());
-        entity.setSku(product.getSku());
-        entity.setSupplierId(product.getSupplierId());
-
-        entity = productRepository.save(entity);
-        return new ProductDTO(entity);
+    public ProductDTO addProduct(ProductDTO dto) {
+        Product product = productRepository.save(modelMapper.map(dto, Product.class));
+        return modelMapper.map(product, ProductDTO.class);
     }
 
     @Transactional
