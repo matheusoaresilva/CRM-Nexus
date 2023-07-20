@@ -41,7 +41,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerDTO addCustomer(CustomerDTO dto){
+    public CustomerDTO createCustomer(CustomerDTO dto){
         Customer customer = customerRepository.save(modelMapper.map(dto, Customer.class));
         return modelMapper.map(customer, CustomerDTO.class);
     }
