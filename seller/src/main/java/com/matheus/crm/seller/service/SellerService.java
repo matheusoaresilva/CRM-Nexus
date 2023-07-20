@@ -39,15 +39,8 @@ public class SellerService {
 
     @Transactional
     public SellerDTO createSeller(SellerDTO dto){
-
-        Seller seller = modelMapper.map(dto, Seller.class);
-
-        seller.setName(dto.getName());
-        seller.setEmail(dto.getEmail());
-        seller.setProfile(StatusProfile.ACTIVE);
-        seller.setAddressId(dto.getAddressId());
-
-        Seller saveSeller = repository.save(seller);
+        dto.setProfile(StatusProfile.ACTIVE);
+        Seller seller = repository.save(modelMapper.map(dto, Seller.class));
 
         return modelMapper.map(seller, SellerDTO.class);
     }
