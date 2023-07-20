@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("/product")
@@ -28,7 +27,6 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
-    //TODO: refatorar controller e partir para proximas ms
 
     @GetMapping()
     public Page<ProductDTO> getProducts(@PageableDefault(size = 10)Pageable pageable){
