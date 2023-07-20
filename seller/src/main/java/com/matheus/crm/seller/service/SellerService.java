@@ -59,7 +59,6 @@ public class SellerService {
                 .orElseThrow(()-> new EntityNotFoundException("Seller with id: "+ id + " not found!"));
 
         seller.setProfile(StatusProfile.INACTIVE);
-
         Seller saveSeller = repository.save(seller);
 
         return modelMapper.map(seller, SellerDTO.class);
