@@ -49,16 +49,9 @@ public class SellerService {
         Seller seller = repository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Seller with id: "+ id + " not found!"));
 
-        seller.setName(dto.getName());
-        seller.setEmail(dto.getEmail());
-        seller.setProfile(dto.getProfile());
-        seller.setAddressId(dto.getAddressId());
-
-        //TODO: resolver bug em profile
-
+        modelMapper.map(dto, seller);
         Seller saveSeller = repository.save(seller);
-
-        return modelMapper.map(seller, SellerDTO.class);
+        return modelMapper.map(saveSeller, SellerDTO.class);
     }
 
     public SellerDTO disableUserProfile(Long id){
