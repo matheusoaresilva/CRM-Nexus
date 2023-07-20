@@ -18,13 +18,13 @@ public class CustomerController {
     private CustomerService customerService;
 
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<CustomerDTO> findCustomerById(@PathVariable(name = "id") Long id){
         CustomerDTO customer = customerService.findCustomerById(id);
         return ResponseEntity.ok(customer);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<CustomerDTO>> getCustomers(){
         List<CustomerDTO> customers = customerService.findAllCustomers();
         if (customers.isEmpty()) {
@@ -33,7 +33,7 @@ public class CustomerController {
         return ResponseEntity.ok().body(customers);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable(name = "id") Long id) {
         customerService.deleteCustomerById(id);
         return ResponseEntity.noContent().build();
@@ -41,7 +41,7 @@ public class CustomerController {
     }
 
 
-    @PostMapping(value = "/add", consumes = "application/json")
+    @PostMapping()
     public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDto) {
         customerDto = customerService.addCustomer(customerDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -49,7 +49,7 @@ public class CustomerController {
         return ResponseEntity.created(uri).body(customerDto);
     }
 
-    @PutMapping(value = "/update/{id}", consumes = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable(name = "id") Long id ,@RequestBody CustomerDTO customerDto) {
         customerDto = customerService.updateCustomer(id, customerDto);
 
