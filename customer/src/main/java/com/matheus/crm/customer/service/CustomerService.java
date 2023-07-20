@@ -9,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,11 +35,9 @@ public class CustomerService {
     }
 
     @Transactional(readOnly = true)
-    public List<CustomerDTO> findAllCustomers(){
-        List<Customer> list = customerRepository.findAll();
-
-        List<CustomerDTO> dtoList = list.stream().map(x -> new CustomerDTO(x)).collect(Collectors.toList());
-        return dtoList;
+    public Page<CustomerDTO> getAllCustomers(Pageable pageable){
+        return customerRepository.findAll(pageable)
+                .map(p -> modelMapper.map(p, CustomerDTO.class));
     }
 
     @Transactional

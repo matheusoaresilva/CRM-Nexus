@@ -3,6 +3,9 @@ package com.matheus.crm.customer.controller;
 import com.matheus.crm.customer.dto.CustomerDTO;
 import com.matheus.crm.customer.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,12 +28,8 @@ public class CustomerController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<CustomerDTO>> getCustomers(){
-        List<CustomerDTO> customers = customerService.findAllCustomers();
-        if (customers.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok().body(customers);
+    public Page<CustomerDTO> getAllCustomers(@PageableDefault(size = 10)Pageable pageable){
+        return customerService.getAllCustomers(pageable);
     }
 
     @DeleteMapping("/{id}")
