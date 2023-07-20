@@ -3,6 +3,9 @@ package com.matheus.crm.product.controller;
 import com.matheus.crm.product.dto.ProductDTO;
 import com.matheus.crm.product.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,14 +28,11 @@ public class ProductController {
         return ResponseEntity.ok(product);
     }
 
+    //TODO: refatorar controller e partir para proximas ms
 
-    @GetMapping("/all")
-    public ResponseEntity<List<ProductDTO>> getProducts(){
-        List<ProductDTO> products = productService.findAllProducts();
-        if (products.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok().body(products);
+    @GetMapping()
+    public Page<ProductDTO> getProducts(@PageableDefault(size = 10)Pageable pageable){
+        return productService.getAllProducts(pageable);
     }
 
 
