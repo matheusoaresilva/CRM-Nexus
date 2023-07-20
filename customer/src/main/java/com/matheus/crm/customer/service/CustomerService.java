@@ -5,6 +5,7 @@ import com.matheus.crm.customer.entity.Customer;
 import com.matheus.crm.customer.repository.CustomerRepository;
 import com.matheus.crm.customer.service.exception.DatabaseException;
 import com.matheus.crm.customer.service.exception.NotFoundException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -20,6 +21,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Transactional
     public CustomerDTO findCustomerById(Long id){
@@ -37,37 +41,20 @@ public class CustomerService {
     }
 
     @Transactional
-    public CustomerDTO addCustomer(CustomerDTO customer){
-        Customer entity = new Customer();
-
-        entity.setName(customer.getName());
-        entity.setCpf(customer.getCpf());
-        entity.setGender(customer.getGender());
-        entity.setPhone(customer.getPhone());
-        entity.setDateBirth(customer.getDateBirth());
-        entity.setEmail(customer.getEmail());
-        entity.setAddressId(customer.getAddressId());
-
-        entity = customerRepository.save(entity);
-        return new CustomerDTO(entity);
+    public CustomerDTO addCustomer(CustomerDTO dto){
+        Customer customer = customerRepository.save(modelMapper.map(dto, Customer.class));
+        return modelMapper.map(customer, CustomerDTO.class);
     }
 
     @Transactional
-    public CustomerDTO updateCustomer(Long id, CustomerDTO customer) {
-        Customer entity = customerRepository.findById(id)
+    public CustomerDTO updateCustomer(Long id, CustomerDTO dto) {
+        Customer customer = customerRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("customer not found for id: " + id));
 
-        entity.setName(customer.getName());
-        entity.setDateBirth(customer.getDateBirth());
-        entity.setCpf(customer.getCpf());
-        entity.setGender(customer.getGender());
-        entity.setPhone(customer.getPhone());
-        entity.setEmail(customer.getEmail());
-        entity.setAddressId(customer.getAddressId());
+        modelMapper.map(dto, customer);
+        Customer saveCustomer = customerRepository.save(customer);
 
-        Customer updatedcustomer = customerRepository.save(entity);
-
-        return new CustomerDTO(updatedcustomer);
+        return modelMapper.map(saveCustomer, CustomerDTO.class);
     }
 
     public void deleteCustomerById(Long id) {
