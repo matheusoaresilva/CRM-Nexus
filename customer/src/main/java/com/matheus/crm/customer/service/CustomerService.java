@@ -27,9 +27,9 @@ public class CustomerService {
 
     @Transactional
     public CustomerDTO findCustomerById(Long id){
-        Optional<Customer> existingC = customerRepository.findById(id);
-        Customer entity =existingC.orElseThrow(()-> new NotFoundException("Id "+ id + " not found!"));
-        return new CustomerDTO(entity);
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(()-> new NotFoundException("Id "+ id + " not found!"));
+        return modelMapper.map(customer, CustomerDTO.class);
     }
 
     @Transactional(readOnly = true)
