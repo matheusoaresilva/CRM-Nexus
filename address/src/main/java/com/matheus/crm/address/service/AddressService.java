@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -38,17 +37,7 @@ public class AddressService {
 
     @Transactional
     public AddressDTO createAddress(AddressDTO dto){
-        Address address = modelMapper.map(dto, Address.class);
-
-        address.setStreet(dto.getStreet());
-        address.setNumber(dto.getNumber());
-        address.setNeighborhood(dto.getNeighborhood());
-        address.setCity(dto.getCity());
-        address.setState(dto.getState());
-        address.setCountry(dto.getCountry());
-        address.setZipcode(dto.getZipcode());
-
-        Address saveAddress = repository.save(address);
+        Address address = repository.save(modelMapper.map(dto, Address.class));
 
         return modelMapper.map(address, AddressDTO.class);
     }
@@ -57,17 +46,10 @@ public class AddressService {
         Address address = repository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Address with id: "+ id +" not found!"));
 
-        address.setStreet(dto.getStreet());
-        address.setNumber(dto.getNumber());
-        address.setNeighborhood(dto.getNeighborhood());
-        address.setCity(dto.getCity());
-        address.setState(dto.getState());
-        address.setCountry(dto.getCountry());
-        address.setZipcode(dto.getZipcode());
-
+        modelMapper.map(dto, address);
         Address saveAddress = repository.save(address);
 
-        return modelMapper.map(address, AddressDTO.class);
+        return modelMapper.map(saveAddress, AddressDTO.class);
     }
 
     public void deleteAddressById(Long id){

@@ -1,7 +1,6 @@
 package com.matheus.crm.address.controller;
 
 import com.matheus.crm.address.dto.AddressDTO;
-import com.matheus.crm.address.entity.Address;
 import com.matheus.crm.address.service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
