@@ -49,7 +49,7 @@ public class CustomerController {
         return ResponseEntity.created(uri).body(customerDto);
     }
 
-    @PutMapping(value = "/{id}", consumes = "application/json")
+    @PutMapping("/{id}")
     public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable(name = "id") Long id ,@RequestBody CustomerDTO customerDto) {
         customerDto = customerService.updateCustomer(id, customerDto);
 
