@@ -30,15 +30,6 @@ public class UserService {
     private ModelMapper modelMapper;
 
 
-    @Transactional(readOnly = true)
-    public List<UserDTO> findAll() {
-        List<UserModel> list = repository.findAll();
-
-        List<UserDTO> listDto = list.stream()
-                .map(x -> new UserDTO(x)).collect(Collectors.toList());
-        return listDto;
-    }
-
     public Page<UserDTO> getAllUsers(Pageable pageable){
         return repository.findAll(pageable)
                 .map(p-> modelMapper.map(p, UserDTO.class));
@@ -53,14 +44,7 @@ public class UserService {
 
     @Transactional
     public UserDTO createUser(UserDTO dto){
-        UserModel user = modelMapper.map(dto, UserModel.class);
-
-        user.setName(dto.getName());
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setRoles(dto.getRoles());
-
-        UserModel saveUser = repository.save(user);
+        UserModel user = repository.save(modelMapper.map(dto, UserModel.class));
 
         return modelMapper.map(user, UserDTO.class);
     }
@@ -69,15 +53,10 @@ public class UserService {
         UserModel user = repository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("User with id: "+ id +" not found!"));
 
-        user.setName(dto.getName());
-        user.setUsername(dto.getUsername());
-        user.setPassword(dto.getPassword());
-        user.setRoles(dto.getRoles());
-
-
+        modelMapper.map(dto, user);
         UserModel saveUser = repository.save(user);
 
-        return modelMapper.map(user, UserDTO.class);
+        return modelMapper.map(saveUser, UserDTO.class);
     }
 
     public void deleteById(Long id) {
