@@ -37,21 +37,6 @@ public class AuthController {
     private PasswordEncoder passwordEncoder;
 
 
-    @GetMapping("/userteste")
-    public String testeUser(){
-        return "se voce esta vendo isso voce deve ser USER";
-    }
-
-    @GetMapping("/adminteste")
-    public String testeAdmin(){
-        return "se voce esta vendo isso voce deve ser ADMIN";
-    }
-
-    @GetMapping("/useradminteste")
-    public String testeAdminUser(){
-        return "se voce esta vendo isso voce deve ser USER OU ADMIN";
-    }
-
 
     @PostMapping("/create")
     public ResponseEntity<String> createUser(@RequestBody UserModel userModel) {
