@@ -13,6 +13,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,10 +29,10 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public ProductDTO findProductBySku(Integer sku){
-        Optional<Product> productOptional = productRepository.findProductBySku(sku);
-        Product entity = productOptional.orElseThrow(() -> new NotFoundException("SKU: " + sku + " not found!"));
-        return new ProductDTO(entity);
+        Product product = productRepository.findProductBySku(sku)
+                .orElseThrow(()-> new EntityNotFoundException("Product with sku " +sku+ "not found!" ));
 
+        return modelMapper.map(product, ProductDTO.class);
     }
 
     @Transactional(readOnly = true)
