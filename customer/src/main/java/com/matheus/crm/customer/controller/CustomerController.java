@@ -9,12 +9,13 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/customer")
+@RequestMapping("/customers")
 public class CustomerController {
 
     @Autowired
@@ -41,18 +42,18 @@ public class CustomerController {
 
 
     @PostMapping()
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDto) {
-        customerDto = customerService.createCustomer(customerDto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(customerDto.getId()).toUri();
-        return ResponseEntity.created(uri).body(customerDto);
+    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO dto, UriComponentsBuilder builder) {
+        CustomerDTO customer = customerService.createCustomer(dto);
+        URI uri = builder.path("/customers/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable(name = "id") Long id ,@RequestBody CustomerDTO customerDto) {
-        customerDto = customerService.updateCustomer(id, customerDto);
+    public ResponseEntity<CustomerDTO> updateCustomer(@PathVariable Long id ,@RequestBody CustomerDTO dto) {
+        CustomerDTO customer = customerService.updateCustomer(id, dto);
 
-        return ResponseEntity.ok().body(customerDto);
+        return ResponseEntity.ok().body(dto);
     }
 }
 
