@@ -57,7 +57,7 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO addProduct(ProductDTO dto) {
+    public ProductDTO createProduct(ProductDTO dto) {
         Product product = productRepository.save(modelMapper.map(dto, Product.class));
         return modelMapper.map(product, ProductDTO.class);
     }

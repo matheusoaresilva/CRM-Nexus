@@ -46,7 +46,7 @@ public class ProductController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDto) {
-        productDto = productService.addProduct(productDto);
+        productDto = productService.createProduct(productDto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(productDto.getId()).toUri();
         return ResponseEntity.created(uri).body(productDto);
