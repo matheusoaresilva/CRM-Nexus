@@ -64,7 +64,7 @@ public class ProductService {
     @Transactional
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("product not found for id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("product not found for id: " + id));
 
         modelMapper.map(dto, product);
         Product saveProduct = productRepository.save(product);
