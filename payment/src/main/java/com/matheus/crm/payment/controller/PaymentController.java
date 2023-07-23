@@ -55,11 +55,11 @@ public class PaymentController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PatchMapping("/{id}/confirm")
-////    @CircuitBreaker(name = "updateOrder", fallbackMethod = "paymentAuthorizedWithIntegrationPending")
-//    public void confirmPayment(@PathVariable @NotNull Long id){
-//        service.confirmPayment(id);
-//    }
+    @PatchMapping("/{id}/confirm")
+//    @CircuitBreaker(name = "updateOrder", fallbackMethod = "paymentAuthorizedWithIntegrationPending")
+    public void confirmPayment(@PathVariable @NotNull Long id){
+        service.confirmPayment(id);
+    }
 
     public void paymentAuthorizedWithIntegrationPending(Long id, Exception e){
         service.changeStatus(id);

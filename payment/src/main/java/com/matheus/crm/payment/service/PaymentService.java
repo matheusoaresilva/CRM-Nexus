@@ -3,6 +3,7 @@ package com.matheus.crm.payment.service;
 import com.matheus.crm.payment.dto.PaymentDTO;
 import com.matheus.crm.payment.entity.Payment;
 import com.matheus.crm.payment.entity.enums.Status;
+import com.matheus.crm.payment.http.OrderClient;
 import com.matheus.crm.payment.repository.PaymentRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class PaymentService {
     @Autowired
     private ModelMapper modelMapper;
 
-//    @Autowired
-//    private OrderClient order;
+    @Autowired
+    private OrderClient order;
 
     public Page<PaymentDTO> getAll(Pageable pageable){
         return repository
@@ -59,16 +60,16 @@ public class PaymentService {
          repository.deleteById(id);
     }
 
-//    public void confirmPayment(Long id){
-//        Optional<Payment> payment = repository.findById(id);
-//
-//        if (!payment.isPresent()){
-//            throw new EntityNotFoundException();
-//        }
-//        payment.get().setStatus(Status.CONFIRMED);
-//        repository.save(payment.get());
-//        order.updatePayment(payment.get().getOrderId());
-//    }
+    public void confirmPayment(Long id){
+        Optional<Payment> payment = repository.findById(id);
+
+        if (!payment.isPresent()){
+            throw new EntityNotFoundException();
+        }
+        payment.get().setStatus(Status.CONFIRMED);
+        repository.save(payment.get());
+        order.updatePayment(payment.get().getOrderId());
+    }
 
     public void changeStatus(Long id){
         Optional<Payment> payment = repository.findById(id);
